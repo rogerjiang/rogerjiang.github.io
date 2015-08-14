@@ -1,6 +1,8 @@
 ---
 layout: post
 title: thingking like a boy
+category: 无所事事
+tags: [人生]
 ---
 
 # thingking like a boy

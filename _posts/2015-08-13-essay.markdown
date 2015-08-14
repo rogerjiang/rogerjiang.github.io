@@ -1,5 +1,8 @@
 ---
 layout: post
+title: 随笔
+category: 无所事事
+tags: [人生]
 ---
 
 # 随笔
