@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>About</title>
+<title>leetcode-3-Longest Substring Without Repeating Characters</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="Python,HTML,CSS,Machine Leaning">
-<link rel="canonical" href="http://rogerjiang.github.io/about/">
+<link rel="canonical" href="http://rogerjiang.github.io/2015/08/18/leetcode_3.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -31,51 +31,6 @@
 </script>
 </head>
 
-    <style type="text/css" media="screen">
-        .wrap1 {
-            margin: 100px;
-            overflow: hidden;
-            position: relative;
-            height: 60%;
-            text-align: center;
-        }
-        .box {
-            text-align: center;
-            position: relative;
-            display: inline-block;
-        }
-        .wrap1 p{
-            font-size: 30px;
-            color: #6f6f6f;
-        }
-        .wrap1 a {
-            color: #D34848;
-        }
-        @-webkit-keyframes firstlayer /* Safari 和 Chrome */ {
-            from {top: 200px;}
-            to {top: 0;}
-        }
-        img {
-            width: 200px;
-            margin:0px auto;
-            position: relative;
-        }
-        <!-- #img-1 { -->
-        <!--     -webkit-animation: firstlayer 2s forwards;/* Safari 和 Chrome */ -->
-        <!-- } -->
-        <!-- #img-2 { -->
-        <!--     -webkit-animation: firstlayer 2s 0.3s forwards;/* Safari 和 Chrome */ -->
-        <!-- } -->
-        <!-- #img-3 { -->
-        <!--     -webkit-animation: firstlayer 2s 0.6s forwards;/* Safari 和 Chrome */ -->
-        <!-- } -->
-        <!-- #img-4 { -->
-        <!--     -webkit-animation: firstlayer 2s 0.9s forwards;/* Safari 和 Chrome */ -->
-        <!-- } -->
-        <!-- #img-5 { -->
-        <!--     -webkit-animation: firstlayer 2s 1.2s forwards;/* Safari 和 Chrome */ -->
-        <!-- } -->
-    </style>
     <body>
         <header class="site-header">
     <div class="wrap">
@@ -121,56 +76,81 @@
     </div>
 </header>
 
-		<div class="page-content">
-		    <div class='wrap1'>
-                <p>To be younger, To be Best</p>
-            </div>
+        <div class="page-content">
+            <div class="wrap">
+                <div class="post">
+    <header class="post-header">
+        <h1><a href="/2015/08/18/leetcode_3.html">leetcode-3-Longest Substring Without Repeating Characters</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-08-18&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#leetcode">leetcode</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#Algorithms">Algorithms</a></p>
+    </header>
+    <article class="post-content">
+        <h1>Longest Substring Without Repeating Characters</h1>
 
-            <div class="wrap1">
-                    人总是在成长，遇见不同的人，不同的事。往事如流水一般，一丝轻柔，想抓住却只能兴叹，只有留在手心的那一丝清凉。岁月如歌,这一
-                    转眼间已经25岁咯，过去的事已经成了回忆，今后的事预测不到。得到与得不到的都是一次经历，享受的依然是这个过程。似乎自
-                    己的梦想还是没有变化，追求自由，随时随地可以去自己想去的地方，做自己想做的事情。
-            </div>
-            <hr />
-            <div class='wrap1'>
-                <p>Enjoy your life, Listen to the real heart</p>
-            </div>
-            <div class='wrap1' id = "wrap-1">
-                <div class="box">
-                    <img id="img-1" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-2" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-3" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-4" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-5" src="../img/about/1.jpg" alt=""/>
-                </div>
-            </div>
-            <hr />
-            <div class='wrap1'>
-                <p>Do not limit the thought, You can do more than yourself</p>
-            </div>
-            <div class='wrap1' id = "wrap-1">
-                <div class="box">
-                    <img id="img-1" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-2" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-3" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-4" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-5" src="../img/about/5.jpg" alt=""/>
-                </div>
-            </div>
-            <hr />
-			<div class='wrap1'>
-                <p>No mater what you have been, Now the word is your time</p>
-            </div>
-            <div class='wrap1' id = "wrap-1">
-                <div class="box">
-                    <img id="img-1" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-2" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-3" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-4" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-5" src="../img/about/2.jpg" alt=""/>
-                </div>
-            </div>
+<h2>一，想法</h2>
 
+<p>今天天气还行，每篇前写一些废话，实在是不错的一件事情。。。。</p>
+
+<h2>二，description</h2>
+
+<p>Given a string, find the length of the longest substring without repeating characters. 
+For example, the longest substring without repeating letters for &quot;abcabcbb&quot; is &quot;abc&quot;, 
+which the length is 3. For &quot;bbbbb&quot; the longest substring is &quot;b&quot;, with the length of 1.</p>
+
+<h2>三，resolvent</h2>
+
+<p>这个问题的想法比较简单，应该还可以优化，简单写了一下，谁知道就过咯。不过大概想了一下，目前的时间复杂度基本
+不会大于O（52*n）所以还好。基本想法是顺序遍历，如果当前的字母，前面有出现过的话，就把相同字母前面的去除。
+如果没有的话，最长的字符串就加1.</p>
+
+<h2>四，code</h2>
+
+<pre>
+<code>
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxLength = 0;
+        int st = 0;
+        int sign = 0;
+        int length = 0;
+        
+        for(int i = 0; i < s.length(); ++i)
+        {
+            sign = 0;
+            for(int j = st; j < i; ++j)
+            {
+                if(s[j] == s[i]) 
+                {
+                    sign = 1;
+                    length = length - (j-st);
+                    st = j+1;
+                }
+            }
+            
+            if(sign == 0) 
+            {
+                length++;
+                if(length > maxLength) {
+                    maxLength = length;
+                }
+            }
+        }
+        
+        return maxLength;
+    }
+};
+</code>
+</pre>
+
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2015/08/18/leetcode_3"  data-title="leetcode-3-Longest Substring Without Repeating Characters - rogerjiang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
+
+            </div>
         </div>
         <footer class="site-footer">
 
@@ -206,5 +186,45 @@
     <div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div>
 </footer>
 
+
+        <!-- mathjax -->
+        <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+        </script>
+        <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+        <!-- highlight -->
+        <script src="/js/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <!-- pleace change it! -->
+        <script type="text/javascript">
+var duoshuoQuery = {short_name:"taizilongxu"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+        </script>
+        <!-- top-scrooll -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+        <script type="text/javascript">
+$(window).scroll(function() {
+    if($(this).scrollTop() > 100) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+        </script>
     </body>
 </html>

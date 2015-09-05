@@ -7,6 +7,18 @@
         <atom:link href="http://rogerjiang.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+                <title>leetcode-3-Longest Substring Without Repeating Characters</title>
+                        
+                
+                    <description>&lt;h1&gt;Longest Substring Without Repeating Characters&lt;/h1&gt;
+</description>
+                
+                <pubDate>Tue, 18 Aug 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/08/18/leetcode_3.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/08/18/leetcode_3.html</guid>
+            </item>
+        
+            <item>
                 <title>leetcode-2-Add Two Numbers</title>
                         
                 
