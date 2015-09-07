@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Tags</title>
+<title>Adopting Modern Objective-C</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="Python,HTML,CSS,Machine Leaning">
-<link rel="canonical" href="http://rogerjiang.github.io/tags/">
+<link rel="canonical" href="http://rogerjiang.github.io/2015/09/07/Adopting_Modern_Objective-c.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -79,69 +79,130 @@
         <div class="page-content">
             <div class="wrap">
                 <div class="post">
-
     <header class="post-header">
-        <h1>Tags</h1>
+        <h1><a href="/2015/09/07/Adopting_Modern_Objective-c.html">Adopting Modern Objective-C</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-09-07&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#iOS">iOS</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#Algorithms">Algorithms</a></p>
     </header>
-
     <article class="post-content">
-        <div id='tag_cloud'>
-    
-    <a href="#人生" title="人生" rel="2">人生</a>
-    
-    <a href="#Algorithms" title="Algorithms" rel="3">Algorithms</a>
-    
-</div>
+        <h1>Adopting Modern Objective-C</h1>
 
-<ul class="listing">
-    
-    <li class="listing-seperator" id="人生">人生</li>
-    
-    <li class="listing-item">
-    <time datetime="2015-08-14">2015-08-14</time>
-    <a href="/2015/08/14/think.html" title="thingking like a boy">thingking like a boy</a>
-    </li>
-    
-    <li class="listing-item">
-    <time datetime="2015-08-13">2015-08-13</time>
-    <a href="/2015/08/13/essay.html" title="随笔">随笔</a>
-    </li>
-    
-    
-    <li class="listing-seperator" id="Algorithms">Algorithms</li>
-    
-    <li class="listing-item">
-    <time datetime="2015-09-07">2015-09-07</time>
-    <a href="/2015/09/07/Adopting_Modern_Objective-c.html" title="Adopting Modern Objective-C">Adopting Modern Objective-C</a>
-    </li>
-    
-    <li class="listing-item">
-    <time datetime="2015-08-18">2015-08-18</time>
-    <a href="/2015/08/18/leetcode_3.html" title="leetcode-3-Longest Substring Without Repeating Characters">leetcode-3-Longest Substring Without Repeating Characters</a>
-    </li>
-    
-    <li class="listing-item">
-    <time datetime="2015-08-17">2015-08-17</time>
-    <a href="/2015/08/17/leetcode.html" title="leetcode-2-Add Two Numbers">leetcode-2-Add Two Numbers</a>
-    </li>
-    
-    
-</ul>
+<h2>一，preface</h2>
 
-<script src="/js/jquery.tagcloud.js" type="text/javascript" charset="utf-8"></script>
-<script language="javascript">
-$.fn.tagcloud.defaults = {
-size: {start: 1, end: 1, unit: 'em'},
-      color: {start: '#f8e0e6', end: '#ff3333'}
+<p>Yesterday, I see an article that talk about something about the instancetype. so I find the document write by apple.
+It&#39;s name is Adopting Modern Objective-C</p>
+
+<h2>二，instancetype</h2>
+
+<p>Use the instancetype keyword as the return type of methods that return an instance of the class they are called on.</p>
+
+<h3>advantage</h3>
+
+<pre>
+<code>
+@interface MyObject : NSObject
+  + (instancetype)factoryMethodA;
+  + (id)factoryMethodB;
+  @end
+  @implementation MyObject
+  + (instancetype)factoryMethodA { return [[[self class] alloc] init]; }
+  + (id)factoryMethodB { return [[[self class] alloc] init]; }
+  @end
+
+  x = [[MyObject factoryMethodA] count]; // Return type of +factoryMethodA is taken to be "MyObject *"
+  y = [[MyObject factoryMethodB] count]; // Return type of +factoryMethodB is "id"
+</code>
+</pre>
+
+<p>Because the instancetype return type of +factoryMethodA, the MyObject doesn&#39;t have a -count method, the compiler gives a warning about the method.
+So it is safe to programmer.</p>
+
+<h3>How to Adopt</h3>
+
+<p>Note that you should replace id with instancetype for return values only, not elsewhere in your code. Unlike id, the instancetype keyword can be used only as the result type in a method declaration.</p>
+
+<h2>三，Properties</h2>
+
+<p>Use Properties instead of instance variables.</p>
+
+<h3>advantage</h3>
+
+<p>1) Auto synthesized getters and setters.
+2) Better declaration of intent of a set of methods.
+3) Property keywords that express additional information about behavior.</p>
+
+<h3>How to Adopt</h3>
+
+<p>Just use property</p>
+
+<h2>四，Enumeration Macros</h2>
+
+<p>Apple provide NS_ENUM and NS_OPTIONS.</p>
+
+<h3>advantage</h3>
+
+<p>NS_ENUM and NS_OPTIONS has also define the type. It is clear for users.</p>
+
+<h3>How to Adopt</h3>
+
+<pre>
+<code>
+typedef NS_ENUM(NSInteger, UITableViewCellStyle) {
+    UITableViewCellStyleDefault,
+    UITableViewCellStyleValue1,
+    UITableViewCellStyleValue2,
+    UITableViewCellStyleSubtitle
 };
 
-$(function () {
-        $('#tag_cloud a').tagcloud();
-        });
-</script>
+typedef NS_OPTIONS(NSUInteger, UIViewAutoresizing) {
+    UIViewAutoresizingNone = 0, 
+    UIViewAutoresizingFlexibleLeftMargin = 1 << 0,
+    UIViewAutoresizingFlexibleWidth = 1 << 1,
+    UIViewAutoresizingFlexibleRightMargin = 1 << 2,
+    UIViewAutoresizingFlexibleTopMargin =1<<3,
+    UIViewAutoresizingFlexibleHeight =1<<4, 
+    UIViewAutoresizingFlexibleBottomMargin = 1 << 5
+};
+</code>
+</pre>
+
+<h2>五，Enumeration Macros</h2>
+
+<p>know the designated initializer and convenience initializer</p>
+
+<h3>advantage</h3>
+
+<p>clear for the designated initializer</p>
+
+<h3>How to Adopt</h3>
+
+<pre>
+<code>
+
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+</code>
+</pre>
+
+<p>change the MRC to ARC</p>
+
+<h2>六，Automatic Reference Counting</h2>
+
+<p>who use who know</p>
+
+<h3>advantage</h3>
+
+<p>convient</p>
+
+<h3>How to Adopt</h3>
+
+<p>change the MRC to ARC</p>
 
     </article>
-
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2015/09/07/Adopting_Modern_Objective-c"  data-title="Adopting Modern Objective-C - rogerjiang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
 </div>
 
             </div>
