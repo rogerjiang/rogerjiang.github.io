@@ -1,0 +1,22 @@
+---
+layout: post
+title: Xcode 条件断点
+category: iOS
+tags: [iOS]
+---
+
+# Xcode 条件断点
+
+## 一，想法
+
+突然来了一个bug,正好是一个循环，一看有84个结果。。。想要特定的一个结果，要跑84次。当然不能这么傻咯，加个条件吧。。
+
+
+## 二，How to do it
+
+![Alt text](/img/posts/condition.png)
+
+当然这个事情比较简单，选择一个断点，并点击Edit Breakpoint。 在condition里面填写一下你需要满足的条件。。。之后就ok咯。
+
+这里有一点需要注意吧，写条件的时候，不用啥if(xxx == 1)这种，直接xxx == 1 就ok咯。 发现一直这里都有问题。。。算一个小坑。
+
