@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>thingking like a boy</title>
+<title>从NSArray类簇</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="Python,HTML,CSS,Machine Leaning">
-<link rel="canonical" href="http://rogerjiang.github.io/2015/08/14/think.html">
+<link rel="canonical" href="http://rogerjiang.github.io/2015/11/02/iOS%E7%B1%BB%E7%B0%87.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -80,52 +80,142 @@
             <div class="wrap">
                 <div class="post">
     <header class="post-header">
-        <h1><a href="/2015/08/14/think.html">thingking like a boy</a></h1>
-        <p class="meta"><i class="fa fa-calendar"></i> 2015-08-14&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#无所事事">无所事事</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#人生">人生</a></p>
+        <h1><a href="/2015/11/02/iOS%E7%B1%BB%E7%B0%87.html">从NSArray类簇</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-11-02&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#iOS">iOS</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#iOS">iOS</a></p>
     </header>
     <article class="post-content">
-        <h1>thingking like a boy</h1>
+        <h1>从NSArray类簇</h1>
 
-<h2>一，工作一年</h2>
+<h2>一，想法</h2>
 
-<p>不知不觉已经工作了一年之久，这个时间算不上长，但也算不上短咯。这一年自身的改变还是挺大的,因此决定花那么
-一点时间来记录一下自己的想法。
-来公司之前并没有相关的开发经验，在一些bug和需求的促进下，慢慢学会了一些常用的技巧。这期间遇到了很多的迷茫
-的事情，不过再大的困难，也这么过来咯，非常感谢老大给这么一个机会。
-记得刚进来第一个比较大的需求是和几个同事一起开发完成的，回过头来想想，当时真的是什么都不懂，并没有多少贡献
-，这里非常感谢导师的帮助。这个项目的开发对我最重要的一点是让我融入了整个团队，并可以一起作战。
-第二个比较大的需求是自己单独完成的，非常感谢导师对我的信任。这期间算是进步非常快的，因为没有人可以依赖，很
-多东西都必须自己去查，也必须自己去解决。虽然这个功能现在看起来还是比较简单的，但是对于当时的我来说挑战还是
-很大的。在这种压力下，最后还是解决了这个问题，当然这期间也非常感谢另一位同事的耐心。想想当时还很傻的提出了
-一个解决方案，发现完全不是这么回事，有点囧。
-后面就开始转战部门负责的产品。这期间不再是简单的页面改造，而是整个产品的升级和改造咯。做了一些新的功能和一些
-功能的升级，这里面改的东西非常的杂，不过也强化了业务的熟悉度。这期间自己实现了一个新的功能。最后能用上也是挺
-开心的，虽然感觉我的实现还是比较low，但毕竟是自己完成的。有所收获，又能有所贡献，还是可喜的一件事。
-过完年回来，发现节奏开始变的很快，在这种环境下，陆陆续续做了很多需求，最大的收获还是对业务的熟悉度进一步加
-深。</p>
+<p>看到了一个关于iOS类簇的一篇文章，觉得这个想法挺不错的，直接转过来。</p>
 
-<h2>二，关于技术</h2>
+<h2>Class Clusters</h2>
 
-<p>混了一年的需求和项目，自己也算是个入门者咯。技术上目前还是仅仅只会一些皮毛的东西，感觉还是对自己的要求太低。
-对自己也制定了一些技术的学习计划。想的太多也没用，先把自己列举的这些知识点学好把，都懂咯应该算是正式的入门咯
-。和同事的聊天中，总是能感觉自己有很多有差距的地方，想想在学校的时候真是全玩掉咯，一些基本功还是需要快速补上
-来的。最近不知道哪根神经触动了自己，觉得自己不应该像现在这样沉沦下去，应该学会真的去认识这个世界。下半年基本
-上有两件需要特别加强的技术点，希望最后能达到自己技术上的目标。</p>
+<p>Class Clusters（类簇）是抽象工厂模式在iOS下的一种实现，众多常用类，如NSString，NSArray，NSDictionary，NSNumber都运作在这一模式下，它是接口简单性和扩展性的权衡体现，在我们完全不知情的情况下，偷偷隐藏了很多具体的实现类，只暴露出简单的接口。</p>
 
-<h2>三，thingking like a boy</h2>
+<h2>NSArray的类簇</h2>
 
-<p>记得上学期间，很喜欢的一句话便是，多想上天再能给我一柄宝剑，一匹骏马，让我再在江湖上行走20年。这是一种退役
-时候的遗憾，虽然没有这么深的感悟，想想当时不玩acm的时候，自己也是非常失落的。可惜上天不会再给我一次机会，能
-有的机会只能从现在抓起咯。
-最近时常会想到一句话，我只有25岁，有什么事情是可以阻挡我的脚步的呢。人长大了一点，却给自己画了一个天花板，
-很多事情不敢再去想。自己的青春只有这么一次，难道真的等到老了以后，再去后悔什么。
-只能说做自己最想做的事情，future是怎样，我现在想不到。现在能想到的还是那句话，一柄宝剑，一匹骏马，我还是想
-在这江湖中挥洒我的青春。</p>
+<p>虽然官方文档中拿NSNumber说事儿，但Foundation并没有像图中描述的那样为每个number都弄一个子类，于是研究下NSArray类簇的实现方式。 </p>
+
+<h2>__NSPlacehodlerArray</h2>
+
+<p>熟悉这个模式的同学很可能看过下面的测试代码，将原有的alloc+init拆开写： </p>
+
+<pre>
+<code>
+id obj1 = [NSArray alloc]; // __NSPlacehodlerArray *
+id obj2 = [NSMutableArray alloc];  // __NSPlacehodlerArray *
+id obj3 = [obj1 init];  // __NSArrayI *
+id obj4 = [obj2 init];  // __NSArrayM *
+</code>
+</pre>
+
+<p>发现+ alloc后并非生成了我们期望的类实例，而是一个<strong>NSPlacehodlerArray的中间对象，后面的- init或- initWithXXXXX消息都是发送给这个中间对象，再由它做工厂，生成真的对象。这里的</strong>NSArrayI和__NSArrayM分别对应Immutable和Mutable（后面的I和M的意思）</p>
+
+<p>于是顺着思路猜实现，__NSPlacehodlerArray必定用某种方式存储了它是由谁alloc出来的这个信息，才能在init的时候知道要创建的是可变数组还是不可变数组</p>
+
+<p>于是乎很开心的去看了下*obj1的内存布局： </p>
+
+<p><img src="/img/posts/lei1.jpg" alt="Alt text"></p>
+
+<p>下面是32位模拟器中的内存布局（64位太长不好看就临时改32位了- -），第一个箭头是<em>obj1，第二个是</em>obj2</p>
+
+<p><img src="/img/posts/lei2.jpg" alt="Alt text"></p>
+
+<p>我们知道，对象的前4字节（32位下）为isa指针，指向类对象地址，上图所示的0x0051E768就是__NSPlacehodlerArray类对象地址，可以从lldb下po这个地址来验证。</p>
+
+<p>那么问题来了，这个中间对象并没有储存任何信息诶（除了isa外就都是0了），那它init的时候咋知道该创建什么呢？
+经过研究发现，Foundation用了一个很贱的比较静态实例地址方式来实现，伪代码如下： </p>
+
+<pre>
+<code>
+static __NSPlacehodlerArray *GetPlaceholderForNSArray() {
+    static __NSPlacehodlerArray *instanceForNSArray;
+    if (!instanceForNSArray) {
+        instanceForNSArray = [[__NSPlacehodlerArray alloc] init];
+    }
+    return instanceForNSArray;
+}
+
+static __NSPlacehodlerArray *GetPlaceholderForNSMutableArray() {
+    static __NSPlacehodlerArray *instanceForNSMutableArray;
+    if (!instanceForNSMutableArray) {
+        instanceForNSMutableArray = [[__NSPlacehodlerArray alloc] init];
+    }
+    return instanceForNSMutableArray;
+}
+// NSArray实现
++ (id)alloc
+{
+    if (self == [NSArray class]) {
+        return GetPlaceholderForNSArray()
+    }
+}
+// NSMutableArray实现
++ (id)alloc
+{
+    if (self == [NSMutableArray class]) {
+        return GetPlaceholderForNSMutableArray()
+    }
+}
+// __NSPlacehodlerArray实现
+- (id)init
+{
+    if (self == GetPlaceholderForNSArray()) {
+        self = [[__NSArrayI alloc] init];
+    }
+    else if (self == GetPlaceholderForNSMutableArray()) {
+        self = [[__NSArrayM alloc] init];
+    }
+    return self;
+}
+
+</code>
+</pre>
+
+<p>Foundation不是开源的，所以上面的代码是猜测的，思路大概就是这样，可以这样验证下： </p>
+
+<pre>
+<code>
+id obj1 = [NSArray alloc]; 
+id obj2 = [NSArray alloc];
+id obj3 = [NSMutableArray alloc];
+id obj4 = [NSMutableArray alloc];
+// 1和2地址相同，3和4地址相同，无论多少次都相同，且地址相差16位
+
+</code>
+</pre>
+
+<h2>静态不可变空对象</h2>
+
+<p>除此之外，Foundation对不可变版本的空数组也做了个小优化：</p>
+
+<pre>
+<code>
+NSArray *arr1 = [[NSArray alloc] init];
+NSArray *arr2 = [[NSArray alloc] init];
+NSArray *arr3 = @[];
+NSArray *arr4 = @[];
+NSArray *arr5 = @[@1];
+
+</code>
+</pre>
+
+<p>上边1-4号都指向了同一个对象，而arr5指向了另一个对象。
+若干个不可变的空数组间没有任何特异性，返回一个静态对象也理所应当。
+不仅是NSArray，Foundation中如NSString, NSDictionary, NSSet等区分可变和不可变版本的类，空实例都是静态对象（NSString的空实例对象是常量区的@&quot;&quot;）</p>
+
+<p>所以也给用这些方法来测试对象内存管理的同学提个醒，很容易意料之外的。</p>
+
+<h2>转载的具体地址</h2>
+
+<p><a href="http://blog.sunnyxx.com/2014/12/18/class-cluster/">http://blog.sunnyxx.com/2014/12/18/class-cluster/</a></p>
 
     </article>
     <!-- Duoshuo Comment BEGIN -->
     <div id="comments">
-        <div class="ds-thread" data-thread-key="/2015/08/14/think"  data-title="thingking like a boy - rogerjiang's Blog"></div>
+        <div class="ds-thread" data-thread-key="/2015/11/02/iOS类簇"  data-title="从NSArray类簇 - rogerjiang's Blog"></div>
     </div>
 <!-- Duoshuo Comment END -->
 </div>

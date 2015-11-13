@@ -7,6 +7,54 @@
         <atom:link href="http://rogerjiang.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+                <title>从kmp算法看自身的不足点</title>
+                        
+                
+                    <description>&lt;h1&gt;关于kmp和自己的想法&lt;/h1&gt;
+</description>
+                
+                <pubDate>Thu, 05 Nov 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/11/05/kmp.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/11/05/kmp.html</guid>
+            </item>
+        
+            <item>
+                <title>从NSArray类簇</title>
+                        
+                
+                    <description>&lt;h1&gt;从NSArray类簇&lt;/h1&gt;
+</description>
+                
+                <pubDate>Mon, 02 Nov 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/11/02/iOS%E7%B1%BB%E7%B0%87.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/11/02/iOS%E7%B1%BB%E7%B0%87.html</guid>
+            </item>
+        
+            <item>
+                <title>国务院关于积极推进“互联网+”行动的指导意见</title>
+                        
+                
+                    <description>&lt;h1&gt;国务院关于积极推进“互联网+”行动的指导意见&lt;/h1&gt;
+</description>
+                
+                <pubDate>Sat, 31 Oct 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/10/31/net+.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/10/31/net+.html</guid>
+            </item>
+        
+            <item>
+                <title>leetcode-200-Number of Islands</title>
+                        
+                
+                    <description>&lt;h1&gt;Number of Islands&lt;/h1&gt;
+</description>
+                
+                <pubDate>Sat, 31 Oct 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/10/31/leetcode.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/10/31/leetcode.html</guid>
+            </item>
+        
+            <item>
                 <title>iOS学习资料整理</title>
                         
                 
@@ -76,46 +124,6 @@
                 <pubDate>Tue, 18 Aug 2015 00:00:00 +0800</pubDate>
                 <link>http://rogerjiang.github.io/2015/08/18/leetcode_3.html</link>
                 <guid isPermaLink="true">http://rogerjiang.github.io/2015/08/18/leetcode_3.html</guid>
-            </item>
-        
-            <item>
-                <title>leetcode-2-Add Two Numbers</title>
-                        
-                
-                    <description>&lt;h1&gt;Add Two Numbers&lt;/h1&gt;
-</description>
-                
-                <pubDate>Mon, 17 Aug 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/08/17/leetcode.html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/08/17/leetcode.html</guid>
-            </item>
-        
-            <item>
-                <title>thingking like a boy</title>
-                        
-                
-                    <description>&lt;h1&gt;thingking like a boy&lt;/h1&gt;
-</description>
-                
-                <pubDate>Fri, 14 Aug 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/08/14/think.html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/08/14/think.html</guid>
-            </item>
-        
-            <item>
-                <title>随笔</title>
-                        
-                
-                    <description>&lt;h1&gt;随笔&lt;/h1&gt;
-
-&lt;p&gt;第一篇blog就这样建立起来咯，谈不上多少惊喜，只是无意间想到了还有这么一件事情需要去做。
-也算是完成了一直以来的一个小的想法，总算是显得有点逼格咯。
-发现自己越来越像一个程序员咯，不知道这个算是一件幸运的事情，还是一件悲伤的事情。&lt;/p&gt;
-</description>
-                
-                <pubDate>Thu, 13 Aug 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/08/13/essay.html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/08/13/essay.html</guid>
             </item>
         
     </channel>

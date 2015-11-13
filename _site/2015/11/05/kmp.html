@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>thingking like a boy</title>
+<title>从kmp算法看自身的不足点</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="Python,HTML,CSS,Machine Leaning">
-<link rel="canonical" href="http://rogerjiang.github.io/2015/08/14/think.html">
+<link rel="canonical" href="http://rogerjiang.github.io/2015/11/05/kmp.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -80,52 +80,104 @@
             <div class="wrap">
                 <div class="post">
     <header class="post-header">
-        <h1><a href="/2015/08/14/think.html">thingking like a boy</a></h1>
-        <p class="meta"><i class="fa fa-calendar"></i> 2015-08-14&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#无所事事">无所事事</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#人生">人生</a></p>
+        <h1><a href="/2015/11/05/kmp.html">从kmp算法看自身的不足点</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-11-05&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#算法">算法</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#算法">算法</a></p>
     </header>
     <article class="post-content">
-        <h1>thingking like a boy</h1>
+        <h1>关于kmp和自己的想法</h1>
 
-<h2>一，工作一年</h2>
+<h2>一，想法</h2>
 
-<p>不知不觉已经工作了一年之久，这个时间算不上长，但也算不上短咯。这一年自身的改变还是挺大的,因此决定花那么
-一点时间来记录一下自己的想法。
-来公司之前并没有相关的开发经验，在一些bug和需求的促进下，慢慢学会了一些常用的技巧。这期间遇到了很多的迷茫
-的事情，不过再大的困难，也这么过来咯，非常感谢老大给这么一个机会。
-记得刚进来第一个比较大的需求是和几个同事一起开发完成的，回过头来想想，当时真的是什么都不懂，并没有多少贡献
-，这里非常感谢导师的帮助。这个项目的开发对我最重要的一点是让我融入了整个团队，并可以一起作战。
-第二个比较大的需求是自己单独完成的，非常感谢导师对我的信任。这期间算是进步非常快的，因为没有人可以依赖，很
-多东西都必须自己去查，也必须自己去解决。虽然这个功能现在看起来还是比较简单的，但是对于当时的我来说挑战还是
-很大的。在这种压力下，最后还是解决了这个问题，当然这期间也非常感谢另一位同事的耐心。想想当时还很傻的提出了
-一个解决方案，发现完全不是这么回事，有点囧。
-后面就开始转战部门负责的产品。这期间不再是简单的页面改造，而是整个产品的升级和改造咯。做了一些新的功能和一些
-功能的升级，这里面改的东西非常的杂，不过也强化了业务的熟悉度。这期间自己实现了一个新的功能。最后能用上也是挺
-开心的，虽然感觉我的实现还是比较low，但毕竟是自己完成的。有所收获，又能有所贡献，还是可喜的一件事。
-过完年回来，发现节奏开始变的很快，在这种环境下，陆陆续续做了很多需求，最大的收获还是对业务的熟悉度进一步加
-深。</p>
+<p>最近的一些工作中竟然用到了一些算法的东西，想想也是挺有意思，幸好以前写过一些，才能很快从这个角度出发，算法确实是一个基础，自己还是需要看看的。。。无意中看到了kmp算法，又重新让我有了那么一丝冲动。似乎多年前看过不少遍kmp，也写过不少遍kmp。但最后的结果还是发现
+自己又一次把这个算法给忘得一干二净，除了知道一个大体的样子。
+还是那句老话说得对，对于算法的这东西，记下来的或者背下来的，或者有疑问的。最后都会忘记的，所以还是要每个点都能想通才是
+王道。这个算是深有体会，当初写bfs这东西，每次都是自己重新写一遍，久而久之，发现最近用到的时候，毫无压力的写出来。
+感觉这个才算是真正的学习，不然纯属浪费时间，还搞得很高大上，想想真是醉咯。
+最近突然对vr技术有兴趣，看看能不能搞点啥，还是一步一步走吧，路很多，路又很少。还是yy比较有感觉。</p>
 
-<h2>二，关于技术</h2>
+<h2>谈谈kmp</h2>
 
-<p>混了一年的需求和项目，自己也算是个入门者咯。技术上目前还是仅仅只会一些皮毛的东西，感觉还是对自己的要求太低。
-对自己也制定了一些技术的学习计划。想的太多也没用，先把自己列举的这些知识点学好把，都懂咯应该算是正式的入门咯
-。和同事的聊天中，总是能感觉自己有很多有差距的地方，想想在学校的时候真是全玩掉咯，一些基本功还是需要快速补上
-来的。最近不知道哪根神经触动了自己，觉得自己不应该像现在这样沉沦下去，应该学会真的去认识这个世界。下半年基本
-上有两件需要特别加强的技术点，希望最后能达到自己技术上的目标。</p>
+<p>其实kmp这东西真不好理解，记得自己当初理解的时候，也推导过公式，也各种纸上画。终究还是不太理解。毕竟这个东西还是比较
+抽象的。网上教程挺多的，可以看看Matrix67的KMP算法详解。也可以看看百度上各个blog的说法。
+其实理解下来，我自己是感觉有一个东西一直不好理解。就是这句话“KMP的预处理本身就是一个B串“自我匹配”的过程”
+这句话，大家都是这么说得，当然这句话我是背下来咯。但是还是不理解。
+其实我们可以发挥一下对比的能力，毕竟这是一个人天生有的一个能力。我们来对比一下，我们用一个B字符串匹配A字符串的这个过程。
+这里所谓的自我匹配，具体怎么对比呢。 
+比如 a b c a b这个字符串. 已经知道0,1,2,3现在求4. 我们的比较是用1位置上的b与最后的一个b。比较发现是相等的。那
+肯定为2咯。这里B字符串是 a b c a b,A字符串是a b...后面随意。 但是 我们发现了一个特点。
+刚刚的例子是相等的，如果不相等，我们怎么办，按照匹配的方式，肯定是找next[1]。对头！就是这样。这样就可以看出来具体的A和B代表的是啥咯。
+也算是比较好理解一点吧。</p>
 
-<h2>三，thingking like a boy</h2>
+<h2>kmp代码</h2>
 
-<p>记得上学期间，很喜欢的一句话便是，多想上天再能给我一柄宝剑，一匹骏马，让我再在江湖上行走20年。这是一种退役
-时候的遗憾，虽然没有这么深的感悟，想想当时不玩acm的时候，自己也是非常失落的。可惜上天不会再给我一次机会，能
-有的机会只能从现在抓起咯。
-最近时常会想到一句话，我只有25岁，有什么事情是可以阻挡我的脚步的呢。人长大了一点，却给自己画了一个天花板，
-很多事情不敢再去想。自己的青春只有这么一次，难道真的等到老了以后，再去后悔什么。
-只能说做自己最想做的事情，future是怎样，我现在想不到。现在能想到的还是那句话，一柄宝剑，一匹骏马，我还是想
-在这江湖中挥洒我的青春。</p>
+<p>顺便A掉了leetcode得strstr这个问题。
+<pre>
+<code>
+class Solution {
+public:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">int next[100000];
+</code></pre></div>
+<p>public:
+    void nextValue(string A)
+    {
+        int n = A.length();
+        next[0] = 0;
+        int j = 0;
+        for(int i = 1; i &lt; n; ++i)
+        {
+             while(j &gt; 0 &amp;&amp; A[i] != A[j]) {
+            j = next[j];
+         }      </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">     if(A[i] == A[j]) {
+        j++;
+        next[i+1] = j;
+     }
+  }
+}
+
+int matchString(string A, string B)
+{
+ int n = A.length();
+ int m = B.length();
+ int j = 0;
+
+ for(int i = 0; i &lt; n; ++i)
+ {
+   while(j &gt; 0 &amp;&amp; B[j] != A[i]) {
+      j = next[j];
+   }
+
+   if(B[j] == A[i]) {
+      j++;
+   }
+
+   if(j == m)
+   {
+       return (i-j+1);
+       j = next[j];
+   }
+ }
+  return -1;
+}
+
+
+int strStr(string haystack, string needle) {
+
+   if(needle == &quot;&quot;) return 0;
+
+   nextValue(needle);
+   return matchString(haystack, needle);
+}
+</code></pre></div>
+<p>};</p>
+
+<p></code>
+</pre></p>
 
     </article>
     <!-- Duoshuo Comment BEGIN -->
     <div id="comments">
-        <div class="ds-thread" data-thread-key="/2015/08/14/think"  data-title="thingking like a boy - rogerjiang's Blog"></div>
+        <div class="ds-thread" data-thread-key="/2015/11/05/kmp"  data-title="从kmp算法看自身的不足点 - rogerjiang's Blog"></div>
     </div>
 <!-- Duoshuo Comment END -->
 </div>

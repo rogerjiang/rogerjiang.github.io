@@ -14,6 +14,20 @@ permalink: /about/
             height: 60%;
             text-align: center;
         }
+        .wrap2 {
+            margin: 100px;
+            overflow: hidden;
+            position: relative;
+            height: 50%;
+            text-align: center;
+        }
+        .wrap3 {
+            margin: 100px;
+            overflow: hidden;
+            position: relative;
+            height: 90%;
+            text-align: center;
+        }
         .box {
             text-align: center;
             position: relative;
@@ -30,11 +44,17 @@ permalink: /about/
             from {top: 200px;}
             to {top: 0;}
         }
-        img {
+        .smallImg {
             width: 200px;
             margin:0px auto;
             position: relative;
         }
+        .bigImg {
+            width: 700px;
+            margin:0px auto;
+            position: relative;
+        }
+
         <!-- #img-1 { -->
         <!--     -webkit-animation: firstlayer 2s forwards;/* Safari 和 Chrome */ -->
         <!-- } -->
@@ -52,26 +72,30 @@ permalink: /about/
         <!-- } -->
     </style>
     <body>
+    	<embed id="sound" src="../music1.mp3" loop="-1" autostart="true" hidden="true"></embed>  
         {% include header.html %}
 		<div class="page-content">
 		    <div class='wrap1'>
                 <p>To be younger, To be Best</p>
             </div>
-
-            <div class="wrap1">
-                    人总是在成长，遇见不同的人，不同的事。往事如流水一般，想抓紧却只剩留在手心的一丝清凉。岁月如歌,转眼间已经25，过去的事成了回忆，今后的事想不到。得到与得不到的都是一次经历，享受的依然是这个过程。似乎自己的梦想还是没有变化，追求自由，随时随地可以去自己想去的地方，做自己想做的事情。
+            <div class="wrap3">
+             	<img id="img-rogerjiang"  src="../img/about/rogerjiang1.jpg" alt=""/>
             </div>
+            <div class="wrap1">
+                人总是在成长，遇见不同的人，不同的事。往事如流水一般，想抓紧却只剩留在手心的一丝清凉。岁月如歌,转眼间已经25，过去的事成了回忆，今后的事想不到。得到与得不到的都是一次经历，享受的依然是这个过程。似乎自己的梦想还是没有变化，追求自由，随时随地可以去自己想去的地方，做自己想做的事情。
+            </div>
+            
             <hr />
             <div class='wrap1'>
                 <p>Enjoy your life, Listen to the real heart</p>
             </div>
             <div class='wrap1' id = "wrap-1">
                 <div class="box">
-                    <img id="img-1" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-2" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-3" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-4" src="../img/about/1.jpg" alt=""/>
-                    <img id="img-5" src="../img/about/1.jpg" alt=""/>
+                    <img id="img-1" class="smallImg" src="../img/about/1.jpg" alt=""/>
+                    <img id="img-2" class="smallImg" src="../img/about/1.jpg" alt=""/>
+                    <img id="img-3" class="smallImg" src="../img/about/1.jpg" alt=""/>
+                    <img id="img-4" class="smallImg" src="../img/about/1.jpg" alt=""/>
+                    <img id="img-5" class="smallImg"src="../img/about/1.jpg" alt=""/>
                 </div>
             </div>
             <hr />
@@ -80,11 +104,11 @@ permalink: /about/
             </div>
             <div class='wrap1' id = "wrap-1">
                 <div class="box">
-                    <img id="img-1" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-2" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-3" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-4" src="../img/about/5.jpg" alt=""/>
-                    <img id="img-5" src="../img/about/5.jpg" alt=""/>
+                    <img id="img-1" class="smallImg" src="../img/about/5.jpg" alt=""/>
+                    <img id="img-2" class="smallImg" src="../img/about/5.jpg" alt=""/>
+                    <img id="img-3" class="smallImg" src="../img/about/5.jpg" alt=""/>
+                    <img id="img-4" class="smallImg" src="../img/about/5.jpg" alt=""/>
+                    <img id="img-5" class="smallImg" src="../img/about/5.jpg" alt=""/>
                 </div>
             </div>
             <hr />
@@ -93,11 +117,11 @@ permalink: /about/
             </div>
             <div class='wrap1' id = "wrap-1">
                 <div class="box">
-                    <img id="img-1" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-2" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-3" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-4" src="../img/about/2.jpg" alt=""/>
-                    <img id="img-5" src="../img/about/2.jpg" alt=""/>
+                    <img id="img-1" class="smallImg" src="../img/about/2.jpg" alt=""/>
+                    <img id="img-2" class="smallImg" src="../img/about/2.jpg" alt=""/>
+                    <img id="img-3" class="smallImg" src="../img/about/2.jpg" alt=""/>
+                    <img id="img-4" class="smallImg" src="../img/about/2.jpg" alt=""/>
+                    <img id="img-5" class="smallImg" src="../img/about/2.jpg" alt=""/>
                 </div>
             </div>
 
