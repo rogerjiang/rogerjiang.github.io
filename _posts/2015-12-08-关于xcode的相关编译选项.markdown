@@ -1,0 +1,56 @@
+---
+layout: post
+title: 关于iOS常见的一个错误问题
+category: iOS
+tags: [iOS]
+---
+
+# 关于iOS常见的一个小问题
+
+## 一，一个frame的问题
+
+当我们想改变一个frame大小的时候，我们经常的写法是 self.view.frame.size.height = 10.0f, 基本每个初学者应该都会遇到这样的一个问题。我们会发小编译器会报错"expression is not assignable"
+
+看到这里会感觉到疑惑，但很快我们就会换一个方式来搞定这个问题，但是为什么会报这个错误，为什么这个地方有问题。
+
+我们看一下这些属性的定义。
+
+@property(nonatomic) CGRect  frame;
+
+struct CGRect {
+    CGPoint origin;
+    CGSize size;
+};
+typedef struct CGRect CGRect;
+
+self.view.frame是Objective-C语法，是读取view属性的frame属性，self.view.frame这句话会被转换成：[[self view] frame]
+
+这是消息传递，frame属性是一个CGRect结构，所以frame.size.height是C语言的语法，就是访问CGRect结构中的size字段，同样，height是CGSize结构的一个字段。
+
+
+这句话实际上就是[[self view] frame].size.height = 10.0f;
+
+上面这句话会被转成C语言的函数调用形式，类似于这种形式：getframe().size.height = 10.0f
+
+而在C语言里，函数的返回值是一个R-Value，是不能直接给它赋值的当你打算直接给函数的返回值赋值的时候，编译器会报错expression is not assignable。
+
+
+## 二，关于copy属性
+
+顺便扫了一眼copy属性的一个问题，这里正好有关于copy的一个小点，想法其实就一句话。。。就顺便写到这片文章里面吧。
+对于NSString, NSArray, NSDictionary.使用copy。
+<pre>
+<code>
+NSMutableString* string = [NSMutableString stringWithString:@"test"];
+NString *stringCopy = [string copy];
+NSMutableString *mStringCopy = [string copy];
+NSMutableString *mmStringCopy = [string mutableCopy];
+[stringCopy appendString:@"a"];
+[mStringCopy appendString:@"b"];
+[mmStringCopy appendString:@"c"];
+</code>
+</pre>
+
+对于苹果api中诸如NSString NSMutableString等类型。
+不可变对象使用copy的时候，只是指针复制。使用mutableCopy的时候是会拷贝一份复制，而且是可变的。
+如果是可变的对象，使用copy和mutableCopy都是会复制一份出来，但是copy的对象是不可变的，mutableCopy复制的对象是可变的。
