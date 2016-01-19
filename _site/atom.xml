@@ -7,6 +7,42 @@
         <atom:link href="http://rogerjiang.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+                <title>关于UIView的frame与bounds</title>
+                        
+                
+                    <description>&lt;h2&gt;前言&lt;/h2&gt;
+</description>
+                
+                <pubDate>Tue, 05 Jan 2016 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2016/01/05/%E5%85%B3%E4%BA%8Eframe%E5%92%8Cbounds.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2016/01/05/%E5%85%B3%E4%BA%8Eframe%E5%92%8Cbounds.html</guid>
+            </item>
+        
+            <item>
+                <title>关于LLDB</title>
+                        
+                
+                    <description>&lt;h1&gt;10个必备的移动UI设计资源站&lt;/h1&gt;
+</description>
+                
+                <pubDate>Mon, 28 Dec 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/12/28/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/12/28/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90.html</guid>
+            </item>
+        
+            <item>
+                <title>关于LLDB</title>
+                        
+                
+                    <description>&lt;h1&gt;关于LLDB一些比较有意思的命令&lt;/h1&gt;
+</description>
+                
+                <pubDate>Thu, 17 Dec 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/12/17/%E5%85%B3%E4%BA%8ELLDB.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/12/17/%E5%85%B3%E4%BA%8ELLDB.html</guid>
+            </item>
+        
+            <item>
                 <title>关于iOS常见的一个错误问题</title>
                         
                 
@@ -88,42 +124,6 @@
                 <pubDate>Tue, 06 Oct 2015 00:00:00 +0800</pubDate>
                 <link>http://rogerjiang.github.io/2015/10/06/iOS%20Recommend.html</link>
                 <guid isPermaLink="true">http://rogerjiang.github.io/2015/10/06/iOS%20Recommend.html</guid>
-            </item>
-        
-            <item>
-                <title>EventHandling for iOS(中)</title>
-                        
-                
-                    <description>&lt;h1&gt;EventHandling for iOS 总结&lt;/h1&gt;
-</description>
-                
-                <pubDate>Wed, 30 Sep 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/09/30/Event(%E4%B8%AD).html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/09/30/Event(%E4%B8%AD).html</guid>
-            </item>
-        
-            <item>
-                <title>Xcode 条件断点</title>
-                        
-                
-                    <description>&lt;h1&gt;Xcode 条件断点&lt;/h1&gt;
-</description>
-                
-                <pubDate>Tue, 29 Sep 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/09/29/xcode%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9.html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/09/29/xcode%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9.html</guid>
-            </item>
-        
-            <item>
-                <title>EventHandling for iOS（上）</title>
-                        
-                
-                    <description>&lt;h1&gt;EventHandling for iOS 总结&lt;/h1&gt;
-</description>
-                
-                <pubDate>Tue, 29 Sep 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/09/29/Event(%E4%B8%8A).html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/09/29/Event(%E4%B8%8A).html</guid>
             </item>
         
     </channel>
