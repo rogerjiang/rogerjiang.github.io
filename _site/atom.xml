@@ -7,6 +7,18 @@
         <atom:link href="http://rogerjiang.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+                <title>醉生梦死的人生，如梦方醒的UITableView</title>
+                        
+                
+                    <description>&lt;h2&gt;前言&lt;/h2&gt;
+</description>
+                
+                <pubDate>Wed, 03 Feb 2016 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2016/02/03/%E9%86%89%E7%94%9F%E6%A2%A6%E6%AD%BB%E7%9A%84%E4%BA%BA%E7%94%9F%EF%BC%8C%E5%A6%82%E6%A2%A6%E6%96%B9%E9%86%92%E7%9A%84UITableView.html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2016/02/03/%E9%86%89%E7%94%9F%E6%A2%A6%E6%AD%BB%E7%9A%84%E4%BA%BA%E7%94%9F%EF%BC%8C%E5%A6%82%E6%A2%A6%E6%96%B9%E9%86%92%E7%9A%84UITableView.html</guid>
+            </item>
+        
+            <item>
                 <title>关于UIView的frame与bounds</title>
                         
                 
@@ -16,30 +28,6 @@
                 <pubDate>Tue, 05 Jan 2016 00:00:00 +0800</pubDate>
                 <link>http://rogerjiang.github.io/2016/01/05/%E5%85%B3%E4%BA%8Eframe%E5%92%8Cbounds.html</link>
                 <guid isPermaLink="true">http://rogerjiang.github.io/2016/01/05/%E5%85%B3%E4%BA%8Eframe%E5%92%8Cbounds.html</guid>
-            </item>
-        
-            <item>
-                <title>关于LLDB</title>
-                        
-                
-                    <description>&lt;h1&gt;10个必备的移动UI设计资源站&lt;/h1&gt;
-</description>
-                
-                <pubDate>Mon, 28 Dec 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/12/28/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90.html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/12/28/%E8%AE%BE%E8%AE%A1%E7%B4%A0%E6%9D%90.html</guid>
-            </item>
-        
-            <item>
-                <title>关于LLDB</title>
-                        
-                
-                    <description>&lt;h1&gt;关于LLDB一些比较有意思的命令&lt;/h1&gt;
-</description>
-                
-                <pubDate>Thu, 17 Dec 2015 00:00:00 +0800</pubDate>
-                <link>http://rogerjiang.github.io/2015/12/17/%E5%85%B3%E4%BA%8ELLDB.html</link>
-                <guid isPermaLink="true">http://rogerjiang.github.io/2015/12/17/%E5%85%B3%E4%BA%8ELLDB.html</guid>
             </item>
         
             <item>
@@ -124,6 +112,18 @@
                 <pubDate>Tue, 06 Oct 2015 00:00:00 +0800</pubDate>
                 <link>http://rogerjiang.github.io/2015/10/06/iOS%20Recommend.html</link>
                 <guid isPermaLink="true">http://rogerjiang.github.io/2015/10/06/iOS%20Recommend.html</guid>
+            </item>
+        
+            <item>
+                <title>EventHandling for iOS(中)</title>
+                        
+                
+                    <description>&lt;h1&gt;EventHandling for iOS 总结&lt;/h1&gt;
+</description>
+                
+                <pubDate>Wed, 30 Sep 2015 00:00:00 +0800</pubDate>
+                <link>http://rogerjiang.github.io/2015/09/30/Event(%E4%B8%AD).html</link>
+                <guid isPermaLink="true">http://rogerjiang.github.io/2015/09/30/Event(%E4%B8%AD).html</guid>
             </item>
         
     </channel>
