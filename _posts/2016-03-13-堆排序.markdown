@@ -1,0 +1,383 @@
+---
+layout: post
+title: 堆排序
+category: 算法
+tags: [算法]
+---
+
+## 前言
+
+最近听了一些前辈的经历和一些想法（这个世界的叼人真是多啊，想想自己真是差的太远咯），总是在思考自己如何才能提高一个档次，毕竟时间过得很快，说着说着就长大咯。。暂时把进入Google作为自己的一个梦想吧。也算是把复杂世界简单化的一个想法。想了想16年需要加强的几个点，1）基础能力，基本的算法能力 2）网络编程，linux的socket和苹果封装的CFNetWork）3）UI的绘制（包括UIKit的常用方法）以及一些coreAnimation的一些用法和原理。
+
+## 关于堆排序的基本点
+
+堆可以分为最大堆和最小堆，基本上对于堆的一个性质，最重要的一条，比如最大堆，就是任意一个节点的值要大于左右两颗子树种所有点的值。堆可以用来排序，每次取堆顶的元素，然后调整整个堆，时间复杂度相对比较稳定。也可以用来实现优先级队列，当然也可以实现队列和栈。 主要需要解决的问题如下：
+    1）建堆(基于两边子树都是标准堆，如何调整)
+    2）两个子树都是标准堆，如何调整节点。
+    3）原先是一个标准堆，新加入一个节点如何操作。
+    4）删除节点，如何重新构建堆
+    5）优先级队列入队和出队，其实就是（新加入一个节点，如何向上调整。 删除头节点，如果向下调整）
+    6）优先级相同的，目前的代码无法保证先进先出，这里需要再加一个维度，比如每次插入新节点的时候再分配一个自增的变量表示这个维度的优先级。
+    7）普通的队列，其实可以看成就是自增的变量代表的优先级。
+    8）对于栈来说，优先级正好相反，可以采用把进入的优先级设置为自增，并采用最大堆，这样后入的优先级最大。
+
+具体的可以看看STL的实现，写的就是普通的demon,可以将这些操作封装成一个类，算是程序员基本能力的一块咯。继续补充自己的短板。。
+
+## 堆排序
+
+<pre>
+<code>
+#include <iostream>
+
+int head[50] = {5, 4, 2, 3, 1, 6, 9, 7, 8};
+
+void swap(int num[], int a, int b)
+{
+    int temp = num[a];
+    num[a] = num[b];
+    num[b] = temp;
+}
+
+void heapDown(int num[], int index, const int size)
+{
+    int min;
+
+    while(index*2 + 1 < size)
+    {
+        min = index*2+1;
+        if(index*2+2 < size) 
+        {
+            if(num[min] > num[index*2+2]) 
+            {
+                min = index*2+2;
+            }
+        }   
+
+        if(num[index] < num[min]) {
+        break;
+        }
+        else {
+            swap(num, index, min);
+            index = min;
+        }
+    }
+}
+
+void pushHeap(int num[], int &size, int value)
+{
+    int index = size;
+    int parent = (index-1)/2;
+
+    while(index > 0 && num[parent] > value)
+    {
+        num[index] = num[parent];
+        index = parent;
+        parent = (index-1)/2;
+    }
+    num[index] = value;
+    size++;
+}
+
+void popHeap(int num[], int &size)
+{
+    num[0] = num[size-1];
+    size--;
+    heapDown(num, 0, size);
+}
+
+
+void createHeap(int num[], int size)
+{
+    for(int i = size/2-1; i >= 0; i--) {
+        heapDown(num, i, size);
+    }
+}
+
+void heapSort(int num[], int size)
+{
+    createHeap(num, size);
+
+    int len = size - 1;
+    for(int i = len; i >= 1; i--) {
+        swap(num, 0, i);
+        size--;
+        heapDown(num, 0, size);
+    }
+}
+
+
+int main(int argc, const char * argv[]) 
+{
+    // insert code here...
+
+    createHeap(head, 9);
+
+    int size = 9;
+
+    for(int i = 0; i < size; ++i)
+    {
+        std::cout<<head[i]<<" ";
+    }
+    std::cout<<std::endl;
+
+
+    pushHeap(head, size, 0);
+    //    heapSort(head, 9);
+
+    for(int i = 0; i < size; ++i)
+    {
+        std::cout<<head[i]<<" ";
+    }
+    std::cout<<std::endl;
+
+    popHeap(head, size);
+
+    for(int i = 0; i < size; ++i)
+    {
+        std::cout<<head[i]<<" ";
+    }
+    std::cout<<std::endl;
+
+    std::cout << "Hello, World!\n";
+    return 0;
+}
+
+</code>
+</pre>
+
+
+## STL
+
+<pre>
+<code>
+// ============================================================================
+// 插入新节点
+// ============================================================================
+// push_heap实现
+// holeIndex为空洞节点的索引，最开始即为末尾待加入堆的节点的索引
+// topIndex为根节点的索引
+// value为待加入节点的值
+template <class _RandomAccessIterator, class _Distance, class _Tp>
+void 
+__push_heap(_RandomAccessIterator __first,
+_Distance __holeIndex, _Distance __topIndex, _Tp __value)
+{
+// 获取父节点的索引值
+_Distance __parent = (__holeIndex - 1) / 2;
+// 如果还没有上升到根节点，且父节点的值小于待插入节点的值
+while (__holeIndex > __topIndex && *(__first + __parent) < __value) {
+// 父节点下降到holeIndex
+*(__first + __holeIndex) = *(__first + __parent);
+// 继续往上检查
+__holeIndex = __parent;
+__parent = (__holeIndex - 1) / 2;
+}
+// 插入节点
+*(__first + __holeIndex) = __value;
+}
+
+template <class _RandomAccessIterator, class _Distance, class _Tp>
+inline void 
+__push_heap_aux(_RandomAccessIterator __first,
+_RandomAccessIterator __last, _Distance*, _Tp*)
+{
+__push_heap(__first, _Distance((__last - __first) - 1), _Distance(0), 
+_Tp(*(__last - 1)));
+}
+
+// 公开接口，假定，此时把*(last-1)压入堆中
+template <class _RandomAccessIterator>
+inline void 
+push_heap(_RandomAccessIterator __first, _RandomAccessIterator __last)
+{
+__push_heap_aux(__first, __last,
+__DISTANCE_TYPE(__first), __VALUE_TYPE(__first));
+}
+
+// ============================================================================
+// 保持堆的性质
+// ============================================================================
+// first 起始位置
+// holeIndex 要进行调整操作的位置
+// len 长度
+// value holeIndex新设置的值
+template <class _RandomAccessIterator, class _Distance, class _Tp>
+void 
+__adjust_heap(_RandomAccessIterator __first, _Distance __holeIndex,
+_Distance __len, _Tp __value)
+{
+// 当前根节点的索引值
+_Distance __topIndex = __holeIndex;
+// 右孩子节点的索引值
+_Distance __secondChild = 2 * __holeIndex + 2;
+// 如果没有到末尾
+while (__secondChild < __len) {
+// 如果右孩子节点的值比左孩子节点的值要小，那么secondChild指向左孩子
+if (*(__first + __secondChild) < *(__first + (__secondChild - 1)))
+__secondChild--;
+// 子节点的往上升
+*(__first + __holeIndex) = *(__first + __secondChild);
+// 继续处理
+__holeIndex = __secondChild;
+__secondChild = 2 * (__secondChild + 1);
+}
+// 如果没有右子节点
+if (__secondChild == __len) {
+*(__first + __holeIndex) = *(__first + (__secondChild - 1));
+__holeIndex = __secondChild - 1;
+}
+// 针对节点topIndex调用push_heap操作
+__push_heap(__first, __holeIndex, __topIndex, __value);
+}
+
+// ============================================================================
+// 弹出一个节点
+// ============================================================================
+// 区间：[first, last)
+// result: 保存根节点的值
+// value: 原来末尾节点的值
+template <class _RandomAccessIterator, class _Tp, class _Distance>
+inline void 
+__pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
+_RandomAccessIterator __result, _Tp __value, _Distance*)
+{
+// 取出根节点的值
+*__result = *__first;
+// 对根节点调用adjust_heap
+__adjust_heap(__first, _Distance(0), _Distance(__last - __first), __value);
+}
+
+template <class _RandomAccessIterator, class _Tp>
+inline void 
+__pop_heap_aux(_RandomAccessIterator __first, _RandomAccessIterator __last,
+_Tp*)
+{
+__pop_heap(__first, __last - 1, __last - 1, 
+_Tp(*(__last - 1)), __DISTANCE_TYPE(__first));
+}
+
+// 对外接口：取出根节点的值放入到末尾节点并保持堆的性质
+template <class _RandomAccessIterator>
+inline void pop_heap(_RandomAccessIterator __first, 
+_RandomAccessIterator __last)
+{
+__pop_heap_aux(__first, __last, __VALUE_TYPE(__first));
+}
+
+// ============================================================================
+// 建堆操作
+// ============================================================================
+template <class _RandomAccessIterator, class _Tp, class _Distance>
+void 
+__make_heap(_RandomAccessIterator __first,
+_RandomAccessIterator __last, _Tp*, _Distance*)
+{
+// 只有一个元素不需要进行任何操作
+if (__last - __first < 2) return;
+_Distance __len = __last - __first;
+_Distance __parent = (__len - 2)/2;
+
+// 从第一个不是叶子节点的索引从后往前调用adjust_heap操作
+while (true) {
+__adjust_heap(__first, __parent, __len, _Tp(*(__first + __parent)));
+if (__parent == 0) return;
+__parent--;
+}
+}
+
+// 公开接口
+template <class _RandomAccessIterator>
+inline void 
+make_heap(_RandomAccessIterator __first, _RandomAccessIterator __last)
+{
+__make_heap(__first, __last,
+__VALUE_TYPE(__first), __DISTANCE_TYPE(__first));
+}
+
+// ============================================================================
+// 堆排序
+// ============================================================================
+// 建好堆之后才能调用sort_heap
+template <class _RandomAccessIterator>
+void sort_heap(_RandomAccessIterator __first, _RandomAccessIterator __last)
+{
+while (__last - __first > 1)
+pop_heap(__first, __last--);
+}
+</code>
+</pre>
+
+<pre>
+<code>
+template <class _Tp, 
+class _Sequence __STL_DEPENDENT_DEFAULT_TMPL(vector<_Tp>),
+class _Compare
+__STL_DEPENDENT_DEFAULT_TMPL(less<typename _Sequence::value_type>) >
+class priority_queue {
+typedef typename _Sequence::value_type _Sequence_value_type;
+
+public:
+typedef typename _Sequence::value_type      value_type;
+typedef typename _Sequence::size_type       size_type;
+typedef          _Sequence                  container_type;
+
+typedef typename _Sequence::reference       reference;
+typedef typename _Sequence::const_reference const_reference;
+protected:
+// c即底层存放数据的容器，默认使用vector<T>
+_Sequence c;
+// comp即为比较函数对象，默认为less<T>
+_Compare comp;
+
+public:
+// 构造函数
+priority_queue() : c() {}
+explicit priority_queue(const _Compare& __x) :  c(), comp(__x) {}
+priority_queue(const _Compare& __x, const _Sequence& __s) 
+: c(__s), comp(__x) 
+{ make_heap(c.begin(), c.end(), comp); }
+
+priority_queue(const value_type* __first, const value_type* __last) 
+: c(__first, __last) { make_heap(c.begin(), c.end(), comp); }
+
+priority_queue(const value_type* __first, const value_type* __last, 
+const _Compare& __x) 
+: c(__first, __last), comp(__x)
+{ make_heap(c.begin(), c.end(), comp); }
+
+priority_queue(const value_type* __first, const value_type* __last, 
+const _Compare& __x, const _Sequence& __c)
+: c(__c), comp(__x) 
+{ 
+c.insert(c.end(), __first, __last);
+make_heap(c.begin(), c.end(), comp);
+}
+
+// empty, size, top是对底层容器的包装
+bool empty() const { return c.empty(); }
+size_type size() const { return c.size(); }
+// 注意top返回const_reference
+const_reference top() const { return c.front(); }
+
+// push操作
+void push(const value_type& __x) {
+__STL_TRY {
+c.push_back(__x); 
+push_heap(c.begin(), c.end(), comp);
+}
+__STL_UNWIND(c.clear());
+}
+// pop操作
+void pop() {
+__STL_TRY {
+pop_heap(c.begin(), c.end(), comp);
+c.pop_back();
+}
+__STL_UNWIND(c.clear());
+}
+};
+
+</code>
+</pre>
+
+
