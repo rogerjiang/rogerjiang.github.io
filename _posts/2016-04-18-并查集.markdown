@@ -1,0 +1,109 @@
+---
+layout: post
+title: 并查集
+category: 算法
+tags: [算法]
+---
+
+## 前言
+
+每次写前言，其实感觉是最需要思考的，借这么一小段说说感想和思考。最近开发真的累的不行，但是面包有咯，梦想依然还需要远行。最近渐渐觉得人真的挺难的，路越走越窄，并不知道将来自己会面对什么，只是不停的走，年纪大咯，想法也多咯。
+
+## 关于并查集的基本点
+
+以前写过，但是很久没碰，基本都给忘咯。大致回顾了一下，并查集主要的两个点，一个是并，一个是查(所以叫并查集)。
+
+所谓的查，就是查找这个点的集合的一个标识。每一个节点记录的都是他的树的父节点，所以一直往上面走，就会遇到整个集合一个一样的头。
+所谓的并，就是先找到这两个树的头，再把着两个头再并起来。
+
+这里有两个优化点，一个查的优化，因为树越低，我们查找越快。我们递归的时候（具体代码看下面), 如果每次x=?? 这种，只是一个临时变量被一直赋值。出递归后不会记录下来什么东西。我们可以father[x] = ?? 这样把每个节点的父节点都赋值为头节点。这下就够快咯。
+第二个是并的优化，如果直接合并，可能会出现一些比较极端的情况，这里使用一个数组记录一下。这里其实可以分两种方法，一种是记录节点的个数，这里使用节点少的去接入节点多的。没什么特别道理，一个直观的方式。代码所示。还有一种是数组记录的是树的高度，这里如果两个树的高度相同，那就加个1，如果不同的话，因为小树放到大树下面，不会增加大树原来的高度，所以高度不变。但是这里如果有路径压缩算法，这个地方其实也是不准确的，所以这个地方不管采用什么方式，仅仅是为了避免最坏的情况，所以随便用吧。。。只要用的爽就行，不过如果性能差咯。可以debug一下这个地方。
+
+
+## 堆排序
+
+<pre>
+<code>
+
+#include <stdio.h>
+#include <string>
+using namespace std;
+
+int father[10000];
+int setRank[10000];
+
+void setInit(int n)
+{
+    for(int i = 0; i < n; ++i)
+    {
+        father[i] = i;
+        setRank[i] = 1;
+    }
+}
+
+int find(int x)
+{
+    if(x != father[x])  {
+        //        father[x] = find(father[x]);
+        x = find(father[x]);
+    }
+
+    return father[x];
+}
+
+int Union(int a, int b)
+{
+    int x = find(a);
+    int y = find(b);
+
+    if(x == y) return 0;
+
+    if(setRank[x] > setRank[y])
+    {
+        father[y] = x;
+        setRank[x] += setRank[y];
+    }
+    else
+    {
+        father[x] = y;
+        setRank[y] += setRank[x];
+    }
+
+    return 1;
+}
+
+
+int main()
+{
+    int n, m, a, b, result;
+
+    while(scanf("%d", &n))
+    {
+        if(n == 0) break;
+
+        scanf("%d", &m);
+
+        result = 0;
+        setInit(n);
+        for(int i = 0; i < m; ++i)
+        {
+            scanf("%d%d", &a, &b);
+            Union(a-1, b-1);
+        }
+
+        for(int i = 0; i < n; ++i)
+        {
+            if(i == father[i]) {
+                result++;
+            }
+        }   
+
+        printf("%d\n", result-1);
+    }
+
+    return 0;
+};
+
+</code>
+</pre>
+
