@@ -1,0 +1,142 @@
+---
+layout: post
+title: 树状数组
+category: 算法
+tags: [算法]
+---
+
+## 前言
+
+最近心情有点low,一方面是巨大的压力，一方面是现实的残酷，未来太迷茫。但是生活继续，最近准备稍微规范一下自己的一些知识点，先打牢一下基础能力，不至于太虚。。
+
+其实也分很多算法，目前可以稍微看看的数据结构，也许会在工作上遇到这些问题。暂时想到看的就这么多。
+
+栈，队列，链表
+哈希表，哈希数组
+堆，优先队列（写）
+双端队列
+可并堆
+左偏堆
+二叉查找树
+Treap
+伸展树
+红黑树
+SBT树
+并查集（写）
+集合计数问题
+二分图的识别
+平衡二叉树
+二叉排序树
+线段树
+一维线段树
+二维线段树
+树状数组
+一维树状数组
+N维树状数组
+字典树
+后缀数组，后缀树
+块状链表
+哈夫曼树
+桶，跳跃表
+Trie树(静态建树、动态建树)
+AC自动机
+LCA和RMQ问题
+KMP算法
+Dancing Links
+
+## 关于树状数组的基本点
+
+树状数组这个东西，也挺神奇，以前人能想出来确实不容易，更贴近于二进制的思想。代码倒是比较简答，不过不理解的话还是不容易敲出来的。
+核心点主要有如下几个地方：
+1）理解lowbit()这个函数，求的是一个数，二进制表示的时候末尾0的个数，比如 2，二进制10。 lowbit(2) = 2。
+2）理解树状数组，父节点和子节点的关系. 一个奇数的节点一定是根节点，因为奇数一定是xxxxxx1，所以lowbit为1。已经知道子节点，求父节点，
+对于两个数组下标x，y(x < y)，如果x + 2^k = y (k等于x的二进制表示中末尾0的个数)，那么定义(y, x)为一组树上的父子关系，其中y为父结点，x为子结点。
+这里也就是所谓的2^k，就是lowbit求得的值。
+3）关于sum和add的操作，这里把数组抽象成树的这种抽象和堆有那么一丝丝的像的感觉。
+
+hud1541算是一个基本的入门，这里定义a[i]为x坐标为i点的个数。
+
+## 堆排序
+
+<pre>
+<code>
+
+#include "stdio.h"
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int n, t;
+int a[33001];
+int c[33001];
+int result[33001];
+
+int lowbit(int x)
+{
+    return x & (-x);
+}
+
+int sumRecursive(int x)
+{
+    if(x == 0) return 0;
+
+    return sumRecursive(x-lowbit(x)) + c[x];
+}
+
+int sum(int x)
+{
+    int sum = 0;
+
+    for(int i = x; i > 0; i = i-lowbit(i))
+    {
+        sum += c[i];
+    }
+
+    return sum;
+}
+
+void addRecursive(int x, int v)
+{
+    if(x <= n)
+    {
+        c[x] += v;
+        addRecursive(x+lowbit(x), v);
+    }
+}
+
+void add(int x, int v)
+{
+    for(int i = x; i <= n; i += lowbit(i)) {
+        c[i] += v;
+    }
+}
+
+int main()
+{
+    int a, b, p, m;
+
+    while(scanf("%d", &m) != EOF)
+    {
+        n = 33001;
+        memset(result, 0, sizeof(result));
+        memset(c, 0, sizeof(c));
+
+        for(int i = 0; i < m; ++i)  
+        {
+            scanf("%d %d", &a, &b);
+            add(a+1, 1);
+            p = sum(a+1)-1;
+            result[p]++;
+        }
+
+        for(int i = 0; i < m; ++i) {
+            printf("%d\n", result[i]);
+        }
+    }
+
+    return 0;
+}
+
+</code>
+</pre>
+
