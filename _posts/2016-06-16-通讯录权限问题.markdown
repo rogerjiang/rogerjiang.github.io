@@ -1,0 +1,50 @@
+---
+layout: post
+title: iOS 本地权限问题
+category: 想法
+tags: [想法]
+---
+
+## problem
+
+Last time, I found something is diff
+
+
+## just like this
+
+
+How do I reset the microphone access permission so that the app will ask for microphone access permission again as if it were downloaded fresh from the App Store?
+
+Reinstalling the app does not accomplish what I need. When I set the permissions in Settings->Privacy->Microphone, I can only turn permissions on or off. I need to reset it so that it asks for permissions again.
+
+2016年06月15日04分58秒
+
+At least starting from iOs 7.1.1 there are switches to change access permission for every single app.
+
+Look in: Settings->Privacy, select the kind of subsytem of your interest ( eg: microphone ), you will see your app in the list. Change the value of the selector according to your needs.
+
+Have a nice day, Stefano
+
+2016年06月15日04分58秒
+
+You can RESET your privacy settings in iOS Settings.
+
+Settings > General > Reset > Reset Location and Privacy.
+
+NOTE: Privacy settings for all apps will be reset.
+
+2016年06月15日04分58秒
+
+Permissions for an uninstalled app are reset after a day.
+
+So, if it is not urgent, you can wait for it reset. I know this is not an ideal solution but it is app specific
+
+2016年06月15日04分58秒
+
+If you change your bundle identifier, that'll also reset the permissions for your app.
+
+2016年06月15日04分58秒
+
+
+
+
