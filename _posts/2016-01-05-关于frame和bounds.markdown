@@ -1,0 +1,184 @@
+---
+layout: post
+title: 关于UIView的frame与bounds
+category: iOS
+tags: [iOS]
+---
+
+## 前言
+
+不知不觉已经到了2016年，告别了25岁的自己，依然还有很多问题没有解决，但是写篇文章记录一些问题，也是纪念逝去青春的一种方式。前段时间研究新框架，遇到这么一个问题，正好有一些想法，记录一下。记得以前听过一句话，小时候看山是山，看水是水，长大了，才发现看山不是山，看水不是水，直到最后才发现看山还是山，看水还是水。所以我们来看看这个山和这个水是不是这个山和这个水。
+
+## 关于UIView的frame和bounds的定义
+
+一般开发使用frame的情形是非常多的，系统也提供了initWithFrame的方法。一般书上对于frame的定义，基本都是这么一句话。frame是view的大小，及相对于父坐标系的位置。bounds是view的大小，及相对于自身坐标系的位置。一直以来的感觉就是，bounds的坐标点一直应该是(0,0),而bounds和frame的大小应该是一样大的，这个经验屡试不爽，再加上基本不改变bounds，也就一直这么认定咯。
+
+##关于view的坐标系问题
+
+对于frame和bounds的理解一直这样延续着，突然有那么一天，风停咯，梦醒咯，眼前那熟悉的面孔变得这么模糊。一些比较难解释的现象摆在了自己的面前。
+<pre>
+<code>
+    UIView* view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 300, 300)];
+    view0.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view0];
+    UIView* view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    view1.backgroundColor = [UIColor greenColor];
+    [view0 addSubview:view1];
+    UIView* view2 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
+    view2.backgroundColor = [UIColor redColor];
+    [view1 addSubview:view2];
+</code>
+</pre>
+
+结果如下:
+
+![Alt text](/img/posts/view_1.png)
+
+这里我们按照一贯的做法，先加上view0, view1, view2这3个view。frame都是按设置的,bounds的origin都是(0,0),size与frame一样。我们发现view中的bounds我们也是可以设置的，我们一贯的想法，bounds都是(0,0)。那我们设置bounds不让他为(0,0)的话，会怎么样呢?
+
+<pre>
+<code>
+    UIView* view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 300, 300)];
+    view0.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view0];
+    UIView* view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    view1.backgroundColor = [UIColor greenColor];
+    [view0 addSubview:view1];
+    UIView* view2 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
+    view2.backgroundColor = [UIColor redColor];
+    [view1 addSubview:view2];
+
+    view1.bounds = CGRectMake(50, 50, 200, 200);
+
+</code>
+</pre>
+
+
+这里我们修改view1的bounds的origin为(0,0)。我们来看一下得到的结果。
+
+![Alt text](/img/posts/view_2.png)
+
+这里比较直观的印象是view2改变了位置，我们打印出view1的bounds和frame,view2的bounds和frame。我们可以看到两个可以思考的问题。
+
+1）这里我们可以看到这里，通过修改view1的origin，view1没有改变，但是view2的位置发生了改变。我们打印出view1的bounds大小,发现view1的bounds确实被改掉咯，view1的bounds的原点不再是(0,0)点，而是（50，50),这里也就说明，bounds的原点不一定就是(0,0),也是可以改变的。
+
+2）view2与view1的左上角点明明是重合的，为什么这里view2的frame依然是(50,50)。按照原先的感觉，这种重合的情况，frame的origin应该是(0,0)。
+
+这两个问题就引出了一个新的问题，view的自身坐标系到底是怎么画的，难道不是与view的原点重合，y轴向下，x轴向右而画的，
+
+好吧，既然一个原有的模型被打破咯。就需要寻找一个新的模型来替代。于是我们可以猜想，对于view1的bounds的改变，view1的坐标系是不是也跟着发生了改变。回到bounds的定义，bounds是相对于自身的坐标系来说的，view1的左上角点，处于当前坐标系的(50,50)这个点。我们按照这个定义，倒过来推坐标系的原点，我们从view1的左上角来画一个坐标系，向下是y轴增加，向右x轴增加。那坐标系原点便是(-50,-50)的点。 这样view1的坐标系的原点就在我们以view1左上角为原点的坐标系(-50,-50)这个点，y轴向下增加，x轴向右增加。
+再来看看view2,view2目前的左上顶点和view1的左上顶点重合，但是frame依然是(50,50)。参考上面的猜想，view1的坐标系是(-50,-50)这个点，那frame确实是(50,50)，因为view2的frame是相对于view1的坐标系来说的，并不是相对于view1的左上角原点来说的。我们发现还是契合了前面的猜想（修改view的bounds的origin，会改变view的坐标系原点）。于是我们可以暂且相信这样的一个模型。
+
+## bounds和frame的长宽是否一定相等
+
+上面的问题，讨论了view原点、坐标系等的关系。这里再看看view的另外两个属性，view的宽和高的问题。我们依葫芦画瓢同样改变一下bounds的宽和高来试试。这里就有两种比较笼统的改法，一种是改小，一种是改大。我们来看看这个地方具体会发生什么，我们先尝试着改小。
+
+<pre>
+<code>
+    UIView* view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 300, 300)];
+    view0.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view0];
+
+    UIView* view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    view1.backgroundColor = [UIColor greenColor];
+    [view0 addSubview:view1];
+
+    UIView* view2 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
+    view2.backgroundColor = [UIColor redColor];
+    [view1 addSubview:view2];
+
+    view1.bounds = CGRectMake(0, 0, 100, 100);
+</code>
+</pre>
+
+结果如下:
+![Alt text](/img/posts/view_3.png)
+
+这里我们看到bounds的宽高改小以后，frame的宽高也跟着变咯。而且是相同的，这个比较符合我们的想法。但是我们发现一个奇怪的现象就是view1的frame的origin也变咯，变为(50,50)。
+我们可以设想一个新的模型，bounds的宽，高变小以后，这里首先frame的宽，高也跟着修改。但是对于位置来说，是以中心点不动，四个边向中间缩小的。正好一边缩小50凑成100大小。
+
+我们先保留这种想法，看看改大bounds的宽和高以后，是不是也是中心点不动，四个边远离中心店扩大的。
+
+<pre>
+<code>
+    UIView* view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 300, 300)];
+    view0.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view0];
+    UIView* view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    view1.backgroundColor = [UIColor greenColor];
+    [view0 addSubview:view1];
+    UIView* view2 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
+    view2.backgroundColor = [UIColor redColor];
+    [view1 addSubview:view2];
+
+    view1.bounds = CGRectMake(0, 0, 300, 300);
+</code>
+</pre>
+
+结果如下:
+
+![Alt text](/img/posts/view_4.png)
+
+暂且相信目前的这个模型，继续做另外一个尝试，修大bounds的宽和高。我们把宽和高都设置为300.我们看看得到的结果，这里可以看出随着bounds的宽高的扩大，frame的宽高也跟着扩大。
+这里我们可以看到frame的origin变成了(-50,-50),也是以中心点不动，四个边远离中心扩大的，正好一边50凑成了100大小。这里我们这个猜想的模型还是适应的，暂且相信这个吧。
+
+
+## view的坐标系一定是垂直的吗？
+
+基本上我们一般开发写的view都是比较正的，坐标系都是y轴向下增加，x轴向右增加。而有些时候，会有一些特殊的情况，比如旋转view的这种情况。按照惯例，先看一段代码，看看这个问题是怎么一个情况。
+
+<pre>
+<code>
+    UIView* view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 300, 300)];
+    view0.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view0];
+    UIView* view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    view1.backgroundColor = [UIColor greenColor];
+    [view0 addSubview:view1];
+    UIView* view2 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
+    view2.backgroundColor = [UIColor redColor];
+    [view1 addSubview:view2];
+
+    view1.transform = CGAffineTransformRotate(view1.transform, M_PI_4);
+</code>
+</pre>
+
+结果如下:
+
+![Alt text](/img/posts/view_5.png)
+
+对于这个view的frame和bounds，应该会有各种想法。我们把这个view的frame和bounds给打印出来，看看具体的结果。
+
+![Alt text](/img/posts/view_6.png)
+
+4个结果依次是view1的bounds和frame,view2的bounds和frame。
+
+这里有两个结果可能比较吸引我们:
+
+1）view1的bounds和view2的bounds的原点都是(0,0)，大小还是(100,100)。view2也发生了旋转，frame并没有改变。也就是和没有旋转的时候是一样的，那必然有一个疑惑，说明坐标系又一次改变咯。
+
+2）view1的frame的origin改变咯，大小竟然和bounds的大小不同咯。
+
+这两个问题，似乎让我们又陷入了泥潭，既然一时没法解释，我们来看看一张很通用的图。
+
+![Alt text](/img/posts/view_7.jpg)
+
+这张图画的挺好的，我们可以看出来，这个时候，frame还是y轴向下增加，x轴向右增加。x轴与view最高的点重叠，而y轴与最左边的点重叠。宽度和高度是以view的在这个
+坐标系下的高度和宽度，也就是说高度是view的y最大点,宽度是view的x最大点。
+我们回到上面这个第二个这个问题，可以很好的解释，为什么frame会变成这么一个奇怪的数字。
+回到上一个标题讨论的问题（bounds和frame的长宽是否一定相等），我们需要重新修改一下模型，也就是bounds和frame的宽度和高度是可以不同的。
+对于第一个问题，坐标系已经不再垂直咯，如图所示随着view的转动，坐标系也进行了转动。
+
+我们可以看到苹果对于frame的文档也写了这么一段话:
+
+> // animatable. do not use frame if view is transformed since it will not correctly reflect the actual location of the view. use bounds + center instead.
+@property(nonatomic) CGRect            frame;
+
+
+上面讨论的结论也算是勉强解释一下这段注释。。。当然也会引出一个经常说的问题。frame的大小是一个虚值，实际是由bounds和center来计算的，这里就不讨论咯。。
+
+##The end
+回到最初的山和水，基本上讨论了上面这些情况。还是那个所谓的定义，frame始终相对的还是父坐标系，而bounds还是相对于自身的坐标系。一花一世界，一树一菩提。每一个细小的，使自己模糊的点都可能是自己知识面的一片空白。基本上代码中写的一些自己不是很清楚的点，很大可能都会出bug，时间不紧的话，还是研究一下吧。当然以上都是一些基本的猜测和想法，存在的一些问题，也希望大家能指出。
+
+
+

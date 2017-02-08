@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>EventHandling for iOS（上）</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/owl.carousel.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/airspace.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/ionicons.min.css" />
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/responsive.css" />
+<link rel="stylesheet" href="/css/syntax.css" />
+
+<!-- Js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/min/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!--
+/*
+ * Airspace
+ * Ported to Jekyll by Andrew Lee
+ * https://github.com/luminousrubyist/airspace-jekyll
+ * Designed and Developed by ThemeFisher
+ * https://themefisher.com/
+ *
+ */
+-->
+
+
+  </head>
+  <body>
+
+
+    <!-- Header Start -->
+<header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- header Nav Start -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="/img/logo.png" alt="Logo">
+            </a>
+          </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/work">Work</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header><!-- header close -->
+
+
+
+    <div class="post">
+  <!-- Wrapper Start -->
+  <section id="intro" style="border: 1px dotted #ddd;">
+    <div class="container">
+      <div class="row">
+        <div>
+          <div class="block">
+            <h1>EventHandling for iOS（上）</h1>
+            <div class="post-info-wrapper">
+              <p class="italic">By <span class="bold"></span> on <span class="bold">September 29, 2015</span></p>
+            </div>
+            <hr />
+            <p><h1 id="eventhandling-for-ios-总结">EventHandling for iOS 总结</h1>
+
+<h2 id="一想法">一，想法</h2>
+
+<p>最近在研究事件处理机制，顺便就把iOS的这块文档看了一下。文档里说了很多，这里准备总结总结，写个简短一点的，比较好看。。。。</p>
+
+<h2 id="二about-events-in-ios">二，About Events in iOS</h2>
+
+<p><img src="/img/posts/event_1.png" alt="Alt text" /></p>
+
+<p>iOS这里主要包括三种主要的事件形式、Multi-Touch events, motion events, and events for controlling multimedia
+第一种主要是用户触摸屏幕形成的事件、第二种主要是用户移动设备形成的事件、第三种主要是一些远程的控制，比如耳机线控这种。</p>
+
+<h2 id="gesture-recognizers">Gesture Recognizers</h2>
+
+<p><img src="/img/posts/event_2.png" alt="Alt text" /></p>
+
+<p>UIKit会封装一些常用的手势，相比于自己写一些gestures代码，这里可以直接使用UIKit已经写好的，毕竟比较方便。
+没一个gesture recognizers都与一个view相关联，当然一个view可以有多个gesture recognizers。</p>
+
+<h3 id="discrete-and-continuous-gestures">Discrete and Continuous Gestures</h3>
+<p>对于手势识别，分为两个部分。一个是分离的，一个是连续的。这里分离指的是只出现一次的，比如单击，这种会发一个单一的消息。
+一个连续的手势识别会发送一系列的事件消息。
+我们要做的是把一个gesture recognizers添加到一个view上，代码如下</p>
+<pre>
+<code>
+- (void)viewDidLoad {
+       [super viewDidLoad];
+       // Create and initialize a tap gesture
+       UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
+            initWithTarget:self action:@selector(respondToTapGesture:)];
+       // Specify that the gesture must be a single tap
+       tapRecognizer.numberOfTapsRequired = 1;
+       // Add the tap gesture recognizer to the view
+       [self.view addGestureRecognizer:tapRecognizer];
+       // Do any additional setup after loading the view, typically from a nib
+  }
+</code>
+</pre>
+
+<h3 id="responding-to-discrete-gestures">Responding to Discrete Gestures</h3>
+
+<p><img src="/img/posts/event_3.png" alt="Alt text" /></p>
+
+<p>左边图片是分离的事件，右边是连续的事件。
+每次当一个状态改变的时候，gesture recognizer 发送一些消息给目标。一个间断的手势
+识别仅仅发送一条简单的消息，而连续的事件会发送多条消息。</p>
+
+<h3 id="interacting-with-other-gesture-recognizers">Interacting with Other Gesture Recognizers</h3>
+
+<p>你可以添加很多gesture recognizer,这里就遇到一个顺序的问题，事实上这里并没有一个顺序来表明是哪个gesture recognizers先收到
+touch事件。</p>
+
+<p>这里有一个问题，比如单击与双击事件同时都监听咯。用户只要单击，这样就会触发单击事件，就一直不会触发这个双击事件。这里我们如何去处理。
+这里使用到了 requireGestureRecognizerToFail,来表明。self.panRecognizer 必须等到self.swipeRecognizer失败以后才会去分析
+这个事件。</p>
+
+<pre>
+<code>
+- (void)viewDidLoad {
+       [super viewDidLoad];
+}
+// Do any additional setup after loading the view, typically from a nib
+[self.panRecognizer requireGestureRecognizerToFail:self.swipeRecognizer];
+</code>
+</pre>
+
+<h3 id="preventing-gesture-recognizers-from-analyzing-touches">Preventing Gesture Recognizers from Analyzing Touches</h3>
+
+<p>有时候我们会想着，阻止一些事件的响应，这里有两种主要的方式。
+gestureRecognizer:shouldReceiveTouch: 这个方法主要是在当一个事件还没出现之前就知道当前的view是否
+接收这个事件，比如有一些页面就是不想让他单击跳转等。</p>
+<pre>
+<code>
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Add the delegate to the tap gesture recognizer
+    self.tapGestureRecognizer.delegate = self;
+}
+// Implement the UIGestureRecognizerDelegate method
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldReceiveTouch:(UITouch *)touch {
+    // Determine if the touch is inside the custom subview
+    if ([touch view] == self.customSubview){
+        // If it is, prevent all of the delegate's gesture recognizers
+        // from receiving the touch
+        return NO;
+}
+return YES; 
+}
+</code>
+</pre>
+
+<p>当然，有些地方可能你一开始并不是那么确定。必须有了一定的分析过后才能决定是否阻止这个gesture recognizer
+此方法在gesture recognizer视图转出UIGestureRecognizerStatePossible状态时调用，如果返回NO,则转换到
+UIGestureRecognizerStateFailed;如果返回YES,则继续识别触摸序列.(默认情况下为YES)</p>
+
+<h3 id="permitting-simultaneous-gesture-recognition">Permitting Simultaneous Gesture Recognition</h3>
+<p>假如你这边想着能够同时识别两种手势，这时候就需要用到gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer: 
+这里只要两个手势，有一个返回yes,就表明可以同时识别</p>
+
+<h3 id="specifying-a-one-way-relationship-between-two-gesture-recognizers">Specifying a One-Way Relationship Between Two Gesture Recognizers</h3>
+<p>现在你又需要干另外一件事情，你想要一种手势识别阻止另一种手势识别，你需要用到 canPreventGestureRecognizer</p>
+
+<h3 id="interacting-with-other-user-interface-controls">Interacting with Other User Interface Controls</h3>
+<p>对于一些特定的UIControl的控制事件，如果在当前的view上添加gesture recognizer.这里并不会收到事件，如果你想收到的话，就需要
+把gesture recognizer 直接添加到这个控制控制上去。</p>
+
+<p>A single finger single tap on a UIButton, UISwitch, UIStepper, UISegmentedControl, and UIPageControl.
+A single finger swipe on the knob of a UISlider, in a direction parallel to the slider.
+A single finger pan gesture on the knob of a UISwitch, in a direction parallel to the switch.</p>
+
+<h3 id="uievent-uitouch">UIEvent UITouch</h3>
+<p>A touch 表明是一个手指在屏幕上的移动。一个gesture包含一个或者多个touch.
+An event 包含了在一次多点触控过程中所有的touches。 这个多点触控的过程开始于一根手指触摸到屏幕，结束于最后一根手指
+离开屏幕。</p>
+
+<h3 id="an-app-receives-touches-in-the-touch-handling-methods">An App Receives Touches in the Touch-Handling Methods</h3>
+<p>在多点触控的过程中，app会有一些回调。
+touchesBegan:withEvent: method when one or more fingers touch down on the screen.
+touchesMoved:withEvent: method when one or more fingers move.
+touchesEnded:withEvent: method when one or more fingers lift up from the screen.
+touchesCancelled:withEvent: method when the touch sequence is canceled by a system event, such as an incoming phone call.</p>
+
+<p>这个地方需要分清楚这些方法指的是touch的事件，和gesture是不同的。这些和gesture recognizer的状态并没有必然的相关性。下面这段话，可以理解一下。
+These methods are not associated with gesture recognizer states, such as UIGestureRecognizerStateBegan and 
+UIGestureRecognizerStateEnded. Gesture recognizer states strictly denote the phase of the gesture recognizer itself, 
+not the phase of the touch objects that are being recognized.</p>
+
+</p>
+          </div>
+        </div><!-- .col-md-7 close -->
+      </div>
+    </div>
+  </section>
+</div>
+<p class="center-text" style="padding: 30px;">
+  <a href="/blog">Back to blog</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="#">How it works</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design &amp; Developed by <a href="http://www.themefisher.com">Themefisher</a>. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>并查集</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/owl.carousel.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/airspace.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/ionicons.min.css" />
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/responsive.css" />
+<link rel="stylesheet" href="/css/syntax.css" />
+
+<!-- Js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/min/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!--
+/*
+ * Airspace
+ * Ported to Jekyll by Andrew Lee
+ * https://github.com/luminousrubyist/airspace-jekyll
+ * Designed and Developed by ThemeFisher
+ * https://themefisher.com/
+ *
+ */
+-->
+
+
+  </head>
+  <body>
+
+
+    <!-- Header Start -->
+<header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- header Nav Start -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="/img/logo.png" alt="Logo">
+            </a>
+          </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/work">Work</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header><!-- header close -->
+
+
+
+    <div class="post">
+  <!-- Wrapper Start -->
+  <section id="intro" style="border: 1px dotted #ddd;">
+    <div class="container">
+      <div class="row">
+        <div>
+          <div class="block">
+            <h1>并查集</h1>
+            <div class="post-info-wrapper">
+              <p class="italic">By <span class="bold"></span> on <span class="bold">April 18, 2016</span></p>
+            </div>
+            <hr />
+            <p><h2 id="前言">前言</h2>
+
+<p>每次写前言，其实感觉是最需要思考的，借这么一小段说说感想和思考。最近开发真的累的不行，但是面包有咯，梦想依然还需要远行。最近渐渐觉得人真的挺难的，路越走越窄，并不知道将来自己会面对什么，只是不停的走，年纪大咯，想法也多咯。</p>
+
+<h2 id="关于并查集的基本点">关于并查集的基本点</h2>
+
+<p>以前写过，但是很久没碰，基本都给忘咯。大致回顾了一下，并查集主要的两个点，一个是并，一个是查(所以叫并查集)。</p>
+
+<p>所谓的查，就是查找这个点的集合的一个标识。每一个节点记录的都是他的树的父节点，所以一直往上面走，就会遇到整个集合一个一样的头。
+所谓的并，就是先找到这两个树的头，再把着两个头再并起来。</p>
+
+<p>这里有两个优化点，一个查的优化，因为树越低，我们查找越快。我们递归的时候（具体代码看下面), 如果每次x=?? 这种，只是一个临时变量被一直赋值。出递归后不会记录下来什么东西。我们可以father[x] = ?? 这样把每个节点的父节点都赋值为头节点。这下就够快咯。
+第二个是并的优化，如果直接合并，可能会出现一些比较极端的情况，这里使用一个数组记录一下。这里其实可以分两种方法，一种是记录节点的个数，这里使用节点少的去接入节点多的。没什么特别道理，一个直观的方式。代码所示。还有一种是数组记录的是树的高度，这里如果两个树的高度相同，那就加个1，如果不同的话，因为小树放到大树下面，不会增加大树原来的高度，所以高度不变。但是这里如果有路径压缩算法，这个地方其实也是不准确的，所以这个地方不管采用什么方式，仅仅是为了避免最坏的情况，所以随便用吧。。。只要用的爽就行，不过如果性能差咯。可以debug一下这个地方。</p>
+
+<h2 id="堆排序">堆排序</h2>
+
+<pre>
+<code>
+
+#include <stdio.h>
+#include <string>
+using namespace std;
+
+int father[10000];
+int setRank[10000];
+
+void setInit(int n)
+{
+    for(int i = 0; i &lt; n; ++i)
+    {
+        father[i] = i;
+        setRank[i] = 1;
+    }
+}
+
+int find(int x)
+{
+    if(x != father[x])  {
+        //        father[x] = find(father[x]);
+        x = find(father[x]);
+    }
+
+    return father[x];
+}
+
+int Union(int a, int b)
+{
+    int x = find(a);
+    int y = find(b);
+
+    if(x == y) return 0;
+
+    if(setRank[x] &gt; setRank[y])
+    {
+        father[y] = x;
+        setRank[x] += setRank[y];
+    }
+    else
+    {
+        father[x] = y;
+        setRank[y] += setRank[x];
+    }
+
+    return 1;
+}
+
+
+int main()
+{
+    int n, m, a, b, result;
+
+    while(scanf("%d", &amp;n))
+    {
+        if(n == 0) break;
+
+        scanf("%d", &amp;m);
+
+        result = 0;
+        setInit(n);
+        for(int i = 0; i &lt; m; ++i)
+        {
+            scanf("%d%d", &amp;a, &amp;b);
+            Union(a-1, b-1);
+        }
+
+        for(int i = 0; i &lt; n; ++i)
+        {
+            if(i == father[i]) {
+                result++;
+            }
+        }   
+
+        printf("%d\n", result-1);
+    }
+
+    return 0;
+};
+
+&lt;/code&gt;
+&lt;/pre&gt;
+
+</string></stdio.h></code></pre>
+</p>
+          </div>
+        </div><!-- .col-md-7 close -->
+      </div>
+    </div>
+  </section>
+</div>
+<p class="center-text" style="padding: 30px;">
+  <a href="/blog">Back to blog</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="#">How it works</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design &amp; Developed by <a href="http://www.themefisher.com">Themefisher</a>. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>

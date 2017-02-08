@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>醉生梦死的人生，如梦方醒的UITableView</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/owl.carousel.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/airspace.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/ionicons.min.css" />
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/responsive.css" />
+<link rel="stylesheet" href="/css/syntax.css" />
+
+<!-- Js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/min/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!--
+/*
+ * Airspace
+ * Ported to Jekyll by Andrew Lee
+ * https://github.com/luminousrubyist/airspace-jekyll
+ * Designed and Developed by ThemeFisher
+ * https://themefisher.com/
+ *
+ */
+-->
+
+
+  </head>
+  <body>
+
+
+    <!-- Header Start -->
+<header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- header Nav Start -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="/img/logo.png" alt="Logo">
+            </a>
+          </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/work">Work</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header><!-- header close -->
+
+
+
+    <div class="post">
+  <!-- Wrapper Start -->
+  <section id="intro" style="border: 1px dotted #ddd;">
+    <div class="container">
+      <div class="row">
+        <div>
+          <div class="block">
+            <h1>醉生梦死的人生，如梦方醒的UITableView</h1>
+            <div class="post-info-wrapper">
+              <p class="italic">By <span class="bold"></span> on <span class="bold">February 3, 2016</span></p>
+            </div>
+            <hr />
+            <p><h2 id="前言">前言</h2>
+
+<p>最近看了一下关于轻量化controller的文章，大致想了一下关于tableView几种写法。</p>
+
+<h2 id="uitableview的3种写法">UITableView的3种写法</h2>
+
+<h3 id="第一类">第一类</h3>
+
+<p>是最常见的一种写法，就以当前的controller作为UITableView的delegate。大致写法如下，代理写在controller里面。</p>
+
+<pre>
+<code>
+@implementation SettingViewController
+-(void) loadView
+{
+    [super loadView];
+    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    self.settingTableView = tableView;
+    [self.view addSubview:tableView];
+}
+
+#pragma mark-- uitableView Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
+{
+    return self.dataSource.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section &lt; 0 || section &gt; self.dataSource.count) {
+        return 0;
+    }
+    NSArray* data = self.dataSource[section];
+    return data.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"recommend"];
+
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"recommend"];
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        SettingCellView* view = [[SettingCellView alloc] init];
+        view.tag = 1001;
+        [cell.contentView addSubview:view];
+    }
+
+    SettingCellView* settingView = (SettingCellView*) [cell.contentView viewWithTag:1001];
+    NSInteger row = [indexPath row];
+    NSInteger section = [indexPath section];
+    SettingCommonModel* model = [self.dataSource[section] objectAtIndex:row];
+    [settingView setData:model];
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+</code>
+</pre>
+
+<p>###第二类：</p>
+
+<p>第二种写法，相对第一种少一点。自己定义一个继承UITableView的子类，并且重写UITableView的各种方法。这里还是设置controlller为代理类，具体的实现放在UITableView的子类里面实现，写法有点特点，当然也可以用代理传出来在controller里面实现。
+大致写法如下: controller还是不变</p>
+
+<pre>
+<code>
+@implementation SettingViewController
+
+-(void) loadView
+{
+    [super loadView];
+
+    SpecialTableView* tableView = [[SpecialTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    self.settingTableView = tableView;
+
+    [self.view addSubview:tableView];
+}
+
+</code>
+</pre>
+
+<p>TableView的各种方法放在SpecialTableView里面写</p>
+
+<pre>
+<code>
+@implementation SpecialTableView
+
+#pragma mark-- uitableView Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
+{
+    return self.dataSource.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section &lt; 0 || section &gt; self.dataSource.count) {
+        return 0;
+    }
+    NSArray* data = self.dataSource[section];
+    return data.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"recommend"];
+
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"recommend"];
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        SettingCellView* view = [[SettingCellView alloc] init];
+        view.tag = 1001;
+        [cell.contentView addSubview:view];
+    }
+
+    SettingCellView* settingView = (SettingCellView*) [cell.contentView viewWithTag:1001];
+    NSInteger row = [indexPath row];
+    NSInteger section = [indexPath section];
+    SettingCommonModel* model = [self.dataSource[section] objectAtIndex:row];
+    [settingView setData:model];
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+</code>
+</pre>
+
+<p>第三种写法，也是将UITableView的具体实现放在controller之外，这里不再继承UITableView，但是新写一个专门的类来作为UITalbeView的代理。</p>
+
+<p>代码大致如下：</p>
+
+<pre>
+<code>
+@implementation SettingViewController
+
+-(void) loadView
+{
+    [super loadView];
+
+    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+
+    self.tableDelegate = [[TableResultDelegate alloc] init];
+    tableView.delegate = self.tableDelegate;
+    tableView.dataSource = self.tableDelegate;
+    [self.view addSubview:tableView];
+}
+</code>
+</pre>
+
+<p>TableResultDelegate的写法：</p>
+
+<pre>
+<code>
+@implementation TableResultDelegate
+
+#pragma mark-- uitableView Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
+{
+    return self.dataSource.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section &lt; 0 || section &gt; self.dataSource.count) {
+        return 0;
+    }   
+    NSArray* data = self.dataSource[section];
+    return data.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"recommend"];
+
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"recommend"];
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        SettingCellView* view = [[SettingCellView alloc] init];
+        view.tag = 1001;
+        [cell.contentView addSubview:view];
+    }
+
+    SettingCellView* settingView = (SettingCellView*) [cell.contentView viewWithTag:1001];
+
+    NSInteger row = [indexPath row];
+    NSInteger section = [indexPath section];
+    SettingCommonModel* model = [self.dataSource[section] objectAtIndex:row];
+    [settingView setData:model];
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{   
+    return 44;
+}
+</code>
+</pre>
+
+<h2 id="关于这3种写法">关于这3种写法</h2>
+
+<p>看了下产品中的代码，这3种都有具体的例子是这么写的，对这几种写法，个人的感觉：</p>
+
+<p>第一种写法是最常见的写法，比较适合一些代码量不大的controller里面的，比如这个页面只有一个UITableView这种场景，这个类的代码结构也是比较清晰的，功能相对比较单一。</p>
+
+<p>如果代码量很大的一个controller，就需要考虑一些轻量化咯。比如一个5，6千行的controller，看的时候会相当的麻烦。所以最好考虑减轻一些controller的负担，就可以把UITableView的这些代理拿出去。</p>
+
+<p>第二种写法相对来说，就是把数据和事件等独立了出来，减轻了controller的负担。可以把UITalbeView作为一个单独的模块。但是觉得继承这个类的话。如果再在controller里面再次写这些代理方法，相对来说会比较混乱(当然也可以不用这些写)。</p>
+
+<p>第三种写法，也是把数据和事件等独立了出来，减轻了controller的负担。对于数据的处理和事件的处理都比较清晰。</p>
+
+<p>第二和第三种写法，还需要考虑一下数据的通信问题，相对来说比较独立一点, 对于比较重的controller，可以考虑这种写法。</p>
+
+</p>
+          </div>
+        </div><!-- .col-md-7 close -->
+      </div>
+    </div>
+  </section>
+</div>
+<p class="center-text" style="padding: 30px;">
+  <a href="/blog">Back to blog</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="#">How it works</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design &amp; Developed by <a href="http://www.themefisher.com">Themefisher</a>. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>

@@ -93,8 +93,8 @@
     <div class="row">
       <div class="col-md-12">
         <div class="block">
-          <h1>Get the latest on what we're doing</h1>
-          <p>Catch up with us, anytime and anywhere</p>
+          <h1>珍惜每一次享受阳光的机会</h1>
+          <p>长烟一空,皓月千里,浮光跃金,静影沉璧</p>
         </div>
       </div>
     </div>
@@ -102,34 +102,156 @@
 </section>
 
 <div class="post-area">
-  <a href="/2016/05/21/welcome-to-jekyll.html" class="bold">Welcome to jekyll!</a>
-  <p class="post-date">21 May 2016</p>
+  <a href="/%E9%97%AE%E9%A2%98/2016/06/17/%E5%85%B3%E4%BA%8EAFNetwork.html" class="bold">iOS AFNetworking</a>
+  <p class="post-date">17 June 2016</p>
   <p>
-    You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when...
+    问题
+
+最近准备搭一个web侧的http请求服务，发现怎么都有问题，表示心里的那个什么马啊。。。在心中不停的冲过来。
+
+具体问题
+
+因为需要一个http协议来返回一些资料。。后台采用了Yii框架来写。。当吭哧吭哧配好环境，跑起来。。。写好controller和action.
+本以为一切水道渠成，没想到竟然afnetwoking报错咯。。。。
+
+JSON text did not start with array or object and option to allow fragments not set。。
+
+因为以前写这个也没啥问题，很容易想到难道是Yii的问题。于是手动写了个php的页面，跑起来。。竟然木有问题。。。这肯定是Yii的锅咯。。于是开始了漫长的Yii框架问题查找。。修改Content-type, AFNetwoking请求的serializer修改。。。。继续错误中。。。
+看来需要使用出杀手锏。。抓包。。 当以为一切事情会顺利的时候。。。才发现一直改到两个url的回包完全一样的时候，竟然还是一个是好的，一个错误，完全崩溃中。。。
+
+崩溃的年代，需要一个英雄。想成英雄，毕竟要有天时地利人和。。。。积攒了一天的人品，也需要爆发一下咯。。。。才发现原来是这么一个问题。。
+自己写的页面是xx/index.php。。 而Yii的路由规则，写了个xx/index.php？r=xx 这种。 而用afnetworking请求用的是post请求。 于是我们换成get请求，英雄诞生咯，世界和平咯。 问题解决咯。。没想到是这个问题。
+
+
   </p>
 </div>
 
 <div class="post-area">
-  <a href="/2016/05/20/this-post-demonstrates-post-content-styles.html" class="bold">This post demonstrates post content styles</a>
-  <p class="post-date">20 May 2016</p>
+  <a href="/%E6%83%B3%E6%B3%95/2016/05/30/%E5%85%B3%E4%BA%8E%E5%9B%BD%E6%BC%AB%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9C%8B%E6%B3%95.html" class="bold">对于国漫的一些看法</a>
+  <p class="post-date">30 May 2016</p>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit. Some great heading (h2) Proin convallis mi ac felis pharetra aliquam. Curabitur dignissim accumsan rutrum. In arcu magna, aliquet vel pretium et,...
+    前言 最近一段时间陆陆续续看了一些国产漫话，对国漫的看法有很大的改观，希望国产漫画能更近一步，有兴趣的人可以好好的关注一下国漫的发展。 国漫简单介绍 基本看漫画都是在QQ上，漫画岛，有妖气，漫画王等app上,大概想的起来那么点的就这些，不过还有好多没有看过。 1）妖怪名单：一个妖怪的世界，男主和妖狐有一段难以忘怀的上辈子缘分，不过男主暂时还未记得，这一世被两个妹子保护和围观的故事。坐等男主想起来，然后小宇宙爆发。 2）中国惊奇先生：相对来说，这部的男主的画风确实不帅气，作为一个道家子弟和一个屌丝，也挺搞笑的，算是一部铲除妖怪的故事。 3）尸兄：这里主要说的是僵尸的事情，画风有些夸张，僵尸也不够帅气，也属于搞笑中的打僵尸节奏。 4）凤临天下-王妃十三岁：一个穿越的故事。。话说这王妃有些太过霸气，能力有点太强咯。。。不太合理。。 5）银之守墓人:这个稍微有点故事情节，画的至少还是比较认真的。。打斗场面还是值得期待的。 6) 从前有座灵剑山:修仙类题材，很有中国特色的题材，漫画比较长，但是耐心看下来也是不错的，还能自己开一个教派。。 7）斗破苍穹:修仙类题材，画风很不错，看出来是用心去画的，描述了一个完整的斗气世界观。男主有暗中相助的师傅，有强大而又相信男主的妹子，相当推荐这部。 8）戒魔人：男主阴差阳错带了个戒指。。结果遇到一堆奇怪的事情。也算是一个冒险类故事咯，听作者慢慢勾画出这样的一个血魔人的世界也不错。 9）妖神记：修仙类题材，和斗破苍穹一样，都很推荐。男主是一个穿越回来的，所以从小就很虎，这里男主不紧自己虎，也带出来一堆小弟，妖神的世界，你值得拥有。 10）通职者：这部没啥特别主题，主角一个屌丝，和万事屋一样，啥都能干。休闲类阅读不错的。 11）超游世界：一个游戏的世界，男主竟然是一个NPC，这个设定挺新颖，不知道女主追寻的秘密具体是什么。 12）斗罗大陆：修仙类题材，唐门的故事，也是很有中国传统文化，刚开始会觉得画风有些随意，不如斗破苍穹。不过值得慢慢看，看作者带给你一个宏大的世界。 13）时空囚徒：这个题材也是很有意思的，被困在一个奇怪的空间中，自寻生路。这类题材很多，一般都比较好看，比如宁航一的惊魂14夜，还有很多这类密闭题材的电影。主角有一个奇怪的技能，但是相对来说，还是比较真实的，比较主角不是上来就开主角光环，这里还是挺弱的。 14）双生灵探：这个一个最主要的感觉是主角应该是一个精神分裂，才会想象出哥哥的样子，不过好歹也是正义的。 15）百花缭乱：男扮女装的魔法世界，想想就知道很搞笑。一个巫婆的世界，可参考哈利波特 16）地狱神医：这个画风实在看着不爽，太阴沉咯。。 17）将夜:这部很推荐，画风很赞。男主属于一个有着从小就背负着复仇的人，当然有很强的能力，向着长安出发。一副古代的恩怨情仇，很值得期待的一部漫画。 18）血色苍穹：扫一个二维码就进入了一个新的世界，我只想说知道结果以后，只能说太扯咯。。。 19) 白灵杀手：杀手的故事，涉及到黑社会的打杀的题材。只想说男主真不喜欢。。 20）七公主：这纯属YY漫画，一个男主，7个可选女主。屌丝可以看看。 21）地府代理人：鬼魂的故事，不过这里面的作战水平比较低。。没啥感觉。 22）word game:密闭探险类漫画，题材还是比较新颖的，值得一看，有点点小残酷。 23）断罪小学:纯YY类漫画，画风很有趣，黑白冷酷型画风，适合休闲时候看看，看小学生的神之打斗。 24) 雨村：这种污染类漫画，让人想到了伊藤润二，不过还是要好一点，有密集恐惧症的还是算咯。 25）神明之胄:关于部落的故事，当然男主也是那种慢慢修炼，虎起来的。 26）球娘:男变女。。当然打球要猛点咯。。 27）上官海铃的焦虑:不知道为什么会想到寒蝉鸣泣之时，也是一个小镇子上奇怪的事情。 28）虐斋:一个一个小故事，不想看连载的可以看看，可看性感觉不是特别好。 29）镇魂街:竟然还是三国人物，打斗场面拍成动漫，感觉还是可以的。 30）日渐崩坏的世界:也是一个一个的小故事，没特别的感觉。 31）修罗:武者的世界，一开始觉得画风太黑，看不清楚。不过打斗场面，人物设定还是很不错的，值得看的一部武者漫画。 32）末日流浪:世界末日，僵尸横行。这个题材也是特别多，不知道为啥。不过真的到了这一步，人性的体现也是赤裸裸的，值得看看。 33）长歌行:一个流落世间的公主，一段必须肩负起历史使命的人生。画风很细腻，值得一看。 34）我有特别的颜艺技巧:表示作者真的脑洞大开，这个画风真是丑煞了主角。。实在看不下去 35）地狱：描述地狱的一些东西。。没啥意思 36）再见女皇陛下:小学生的战斗，看了一点也看不下去咯。。 37）超能领域:记得不是很清楚咯。一场意外车祸改变49个人的命运。。 38）王芳传:很久以前贴吧看过的咯。。。有点小血腥，命运始终是个循环 39）月球漩涡:一个和月球有关的末日故事。。 40）丧尸风暴:末日僵尸的来临，应该何去何从。。 41）鬼吹灯之惊绝古城:古墓类探险漫画，探险类一直是一个可以让人有想象的话题。。 42）LOL神坑联盟:玩LOL的才能弄懂这个漫画到底是啥意思。。。简单看看即可。。...
   </p>
 </div>
 
 <div class="post-area">
-  <a href="/2016/05/20/super-long-article.html" class="bold">Some articles are just so long they deserve a really long title to see if things will break well</a>
-  <p class="post-date">20 May 2016</p>
+  <a href="/%E7%AE%97%E6%B3%95/2016/04/19/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84.html" class="bold">树状数组</a>
+  <p class="post-date">19 April 2016</p>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit. Proin convallis mi ac felis pharetra aliquam. Curabitur dignissim accumsan rutrum. In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris...
+    前言 最近心情有点low, 准备稍微规范一下自己的一些知识点，先打牢一下基础能力，不至于太虚。。 其实也分很多算法，目前可以稍微看看的数据结构，也许会在工作上遇到这些问题。暂时想到看的就这么多。 栈，队列，链表 哈希表，哈希数组 堆，优先队列（写） 双端队列 可并堆 左偏堆 二叉查找树 Treap 伸展树 红黑树 SBT树 并查集（写） 集合计数问题 二分图的识别 平衡二叉树 二叉排序树 线段树 一维线段树 二维线段树 树状数组 一维树状数组 N维树状数组 字典树 后缀数组，后缀树 块状链表 哈夫曼树 桶，跳跃表 Trie树(静态建树、动态建树) AC自动机 LCA和RMQ问题 KMP算法 Dancing Links 关于树状数组的基本点 树状数组这个东西，也挺神奇，以前人能想出来确实不容易，更贴近于二进制的思想。代码倒是比较简答，不过不理解的话还是不容易敲出来的。 核心点主要有如下几个地方： 1）理解lowbit()这个函数，求的是一个数，二进制表示的时候末尾0的个数，比如 2，二进制10。 lowbit(2) = 2。 2）理解树状数组，父节点和子节点的关系. 一个奇数的节点一定是根节点，因为奇数一定是xxxxxx1，所以lowbit为1。已经知道子节点，求父节点， 对于两个数组下标x，y(x &lt; y)，如果x...
   </p>
 </div>
 
 <div class="post-area">
-  <a href="/2016/05/20/my-example-post.html" class="bold">My Example Post</a>
-  <p class="post-date">20 May 2016</p>
+  <a href="/%E7%AE%97%E6%B3%95/2016/04/18/%E5%B9%B6%E6%9F%A5%E9%9B%86.html" class="bold">并查集</a>
+  <p class="post-date">18 April 2016</p>
   <p>
-    Eos eu docendi tractatos sapientem, brute option menandri in vix, quando vivendo accommodare te ius. Nec melius fastidii constituam id, viderer theophrastus ad sit, hinc semper periculis cum id. Noluisse postulant assentior est in, no choro sadipscing repudiandae vix. Vis in euismod delenit dignissim. Ex quod nostrum sit, suas decore...
+    前言 每次写前言，其实感觉是最需要思考的，借这么一小段说说感想和思考。最近开发真的累的不行，但是面包有咯，梦想依然还需要远行。最近渐渐觉得人真的挺难的，路越走越窄，并不知道将来自己会面对什么，只是不停的走，年纪大咯，想法也多咯。 关于并查集的基本点 以前写过，但是很久没碰，基本都给忘咯。大致回顾了一下，并查集主要的两个点，一个是并，一个是查(所以叫并查集)。 所谓的查，就是查找这个点的集合的一个标识。每一个节点记录的都是他的树的父节点，所以一直往上面走，就会遇到整个集合一个一样的头。 所谓的并，就是先找到这两个树的头，再把着两个头再并起来。 这里有两个优化点，一个查的优化，因为树越低，我们查找越快。我们递归的时候（具体代码看下面), 如果每次x=?? 这种，只是一个临时变量被一直赋值。出递归后不会记录下来什么东西。我们可以father[x] = ?? 这样把每个节点的父节点都赋值为头节点。这下就够快咯。 第二个是并的优化，如果直接合并，可能会出现一些比较极端的情况，这里使用一个数组记录一下。这里其实可以分两种方法，一种是记录节点的个数，这里使用节点少的去接入节点多的。没什么特别道理，一个直观的方式。代码所示。还有一种是数组记录的是树的高度，这里如果两个树的高度相同，那就加个1，如果不同的话，因为小树放到大树下面，不会增加大树原来的高度，所以高度不变。但是这里如果有路径压缩算法，这个地方其实也是不准确的，所以这个地方不管采用什么方式，仅仅是为了避免最坏的情况，所以随便用吧。。。只要用的爽就行，不过如果性能差咯。可以debug一下这个地方。 堆排序 #include #include using namespace std; int father[10000]; int setRank[10000]; void setInit(int n) { for(int i = 0; i &lt; n; ++i) { father[i] = i; setRank[i] = 1; } } int find(int x) { if(x !=...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/ios/2016/02/03/%E9%86%89%E7%94%9F%E6%A2%A6%E6%AD%BB%E7%9A%84%E4%BA%BA%E7%94%9F-%E5%A6%82%E6%A2%A6%E6%96%B9%E9%86%92%E7%9A%84UITableView.html" class="bold">醉生梦死的人生，如梦方醒的UITableView</a>
+  <p class="post-date">03 February 2016</p>
+  <p>
+    前言 最近看了一下关于轻量化controller的文章，大致想了一下关于tableView几种写法。 UITableView的3种写法 第一类 是最常见的一种写法，就以当前的controller作为UITableView的delegate。大致写法如下，代理写在controller里面。 @implementation SettingViewController -(void) loadView { [super loadView]; UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT) style:UITableViewStyleGrouped]; tableView.delegate = self; tableView.dataSource = self; self.settingTableView = tableView; [self.view addSubview:tableView]; } #pragma mark-- uitableView Delegate - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView; { return self.dataSource.count; } - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { if(section...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/ios/2016/01/05/%E5%85%B3%E4%BA%8Eframe%E5%92%8Cbounds.html" class="bold">关于UIView的frame与bounds</a>
+  <p class="post-date">05 January 2016</p>
+  <p>
+    前言 不知不觉已经到了2016年，告别了25岁的自己，依然还有很多问题没有解决，但是写篇文章记录一些问题，也是纪念逝去青春的一种方式。前段时间研究新框架，遇到这么一个问题，正好有一些想法，记录一下。记得以前听过一句话，小时候看山是山，看水是水，长大了，才发现看山不是山，看水不是水，直到最后才发现看山还是山，看水还是水。所以我们来看看这个山和这个水是不是这个山和这个水。 关于UIView的frame和bounds的定义 一般开发使用frame的情形是非常多的，系统也提供了initWithFrame的方法。一般书上对于frame的定义，基本都是这么一句话。frame是view的大小，及相对于父坐标系的位置。bounds是view的大小，及相对于自身坐标系的位置。一直以来的感觉就是，bounds的坐标点一直应该是(0,0),而bounds和frame的大小应该是一样大的，这个经验屡试不爽，再加上基本不改变bounds，也就一直这么认定咯。 ##关于view的坐标系问题 对于frame和bounds的理解一直这样延续着，突然有那么一天，风停咯，梦醒咯，眼前那熟悉的面孔变得这么模糊。一些比较难解释的现象摆在了自己的面前。 UIView* view0 = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 300, 300)]; view0.backgroundColor = [UIColor whiteColor]; [self.view addSubview:view0]; UIView* view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)]; view1.backgroundColor = [UIColor greenColor]; [view0 addSubview:view1]; UIView* view2 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)]; view2.backgroundColor = [UIColor redColor]; [view1...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/ios/2015/11/02/iOS%E7%B1%BB%E7%B0%87.html" class="bold">从NSArray类簇</a>
+  <p class="post-date">02 November 2015</p>
+  <p>
+    NSArray类簇 一，想法 看到了一个关于iOS类簇的一篇文章，觉得这个想法挺不错的，直接转过来。 Class Clusters Class Clusters（类簇）是抽象工厂模式在iOS下的一种实现，众多常用类，如NSString，NSArray，NSDictionary，NSNumber都运作在这一模式下，它是接口简单性和扩展性的权衡体现，在我们完全不知情的情况下，偷偷隐藏了很多具体的实现类，只暴露出简单的接口。 NSArray的类簇 虽然官方文档中拿NSNumber说事儿，但Foundation并没有像图中描述的那样为每个number都弄一个子类，于是研究下NSArray类簇的实现方式。 __NSPlacehodlerArray 熟悉这个模式的同学很可能看过下面的测试代码，将原有的alloc+init拆开写： id obj1 = [NSArray alloc]; // __NSPlacehodlerArray * id obj2 = [NSMutableArray alloc]; // __NSPlacehodlerArray * id obj3 = [obj1 init]; // __NSArrayI * id obj4 = [obj2 init]; // __NSArrayM * 发现+ alloc后并非生成了我们期望的类实例，而是一个__NSPlacehodlerArray的中间对象，后面的- init或- initWithXXXXX消息都是发送给这个中间对象，再由它做工厂，生成真的对象。这里的__NSArrayI和__NSArrayM分别对应Immutable和Mutable（后面的I和M的意思） 于是顺着思路猜实现，__NSPlacehodlerArray必定用某种方式存储了它是由谁alloc出来的这个信息，才能在init的时候知道要创建的是可变数组还是不可变数组 于是乎很开心的去看了下*obj1的内存布局： 下面是32位模拟器中的内存布局（64位太长不好看就临时改32位了-...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/%E5%85%B3%E4%BA%8E%E5%9B%BD%E5%AE%B6%E6%94%BF%E7%AD%96/2015/10/31/net+.html" class="bold">国务院关于积极推进“互联网+”行动的指导意见</a>
+  <p class="post-date">31 October 2015</p>
+  <p>
+    国务院关于积极推进“互联网+”行动的指导意见 一，想法 在如此动荡的年代，机会总是转瞬即逝。多了解一些潮流，看清局势，总是有一些必要的。看了一下关于互联网+行动的指导意见，也许可以看出一些未来的方向。 多见识一些东西，多思考一些东西，总是对自己将来的决定有所帮助。 正文 各省、自治区、直辖市人民政府，国务院各部委、各直属机构： 　　“互联网+”是把互联网的创新成果与经济社会各领域深度融合，推动技术进 步、效率提升和组织变革，提升实体经济创新力和生产力，形成更广泛的以互联网为基础设施和创新要素的经济社会发展新形态。在全球新一轮科技革命和产业变革 中，互联网与各领域的融合发展具有广阔前景和无限潜力，已成为不可阻挡的时代潮流，正对各国经济社会发展产生着战略性和全局性的影响。积极发挥我国互联网 已经形成的比较优势，把握机遇，增强信心，加快推进“互联网+”发展，有利于重塑创新体系、激发创新活力、培育新兴业态和创新公共服务模式，对打造大众创 业、万众创新和增加公共产品、公共服务“双引擎”，主动适应和引领经济发展新常态，形成经济发展新动能，实现中国经济提质增效升级具有重要意义。 　 　近年来，我国在互联网技术、产业、应用以及跨界融合等方面取得了积极进展，已具备加快推进“互联网+”发展的坚实基础，但也存在传统企业运用互联网的意 识和能力不足、互联网企业对传统产业理解不够深入、新业态发展面临体制机制障碍、跨界融合型人才严重匮乏等问题，亟待加以解决。为加快推动互联网与各领域 深入融合和创新发展，充分发挥“互联网+”对稳增长、促改革、调结构、惠民生、防风险的重要作用，现就积极推进“互联网+”行动提出以下意见。 　　一、行动要求 　　（一）总体思路。 　 　顺应世界“互联网+”发展趋势，充分发挥我国互联网的规模优势和应用优势，推动互联网由消费领域向生产领域拓展，加速提升产业发展水平，增强各行业创新 能力，构筑经济社会发展新优势和新动能。坚持改革创新和市场需求导向，突出企业的主体作用，大力拓展互联网与经济社会各领域融合的广度和深度。着力深化体 制机制改革，释放发展潜力和活力；着力做优存量，推动经济提质增效和转型升级；着力做大增量，培育新兴业态，打造新的增长点；着力创新政府服务模式，夯实 网络发展基础，营造安全网络环境，提升公共服务水平。 　　 （二）基本原则。 　　坚持开放共享。营造开放包容的发展环境，将互联网作为生产生活要素共享的重要平台，最大限度优化资源配置，加快形成以开放、共享为特征的经济社会运行新模式。 　　坚持融合创新。鼓励传统产业树立互联网思维，积极与“互联网+”相结合。推动互联网向经济社会各领域加速渗透，以融合促创新，最大程度汇聚各类市场要素的创新力量，推动融合性新兴产业成为经济发展新动力和新支柱。 　　坚持变革转型。充分发挥互联网在促进产业升级以及信息化和工业化深度融合中的平台作用，引导要素资源向实体经济集聚，推动生产方式和发展模式变革。创新网络化公共服务模式，大幅提升公共服务能力。 　　坚持引领跨越。巩固提升我国互联网发展优势，加强重点领域前瞻性布局，以互联网融合创新为突破口，培育壮大新兴产业，引领新一轮科技革命和产业变革，实现跨越式发展。 　　坚持安全有序。完善互联网融合标准规范和法律法规，增强安全意识，强化安全管理和防护，保障网络安全。建立科学有效的市场监管方式，促进市场有序发展，保护公平竞争，防止形成行业垄断和市场壁垒。 　　 （三）发展目标。 　　到2018年，互联网与经济社会各领域的融合发展进一步深化，基于互联网的新业态成为新的经济增长动力，互联网支撑大众创业、万众创新的作用进一步增强，互联网成为提供公共服务的重要手段，网络经济与实体经济协同互动的发展格局基本形成。 　　——经济发展进一步提质增效。互联网在促进制造业、农业、能源、环保等产业转型升级方面取得积极成效，劳动生产率进一步提高。基于互联网的新兴业态不断涌现，电子商务、互联网金融快速发展，对经济提质增效的促进作用更加凸显。 　　——社会服务进一步便捷普惠。健康医疗、教育、交通等民生领域互联网应用更加丰富，公共服务更加多元，线上线下结合更加紧密。社会服务资源配置不断优化，公众享受到更加公平、高效、优质、便捷的服务。 　　——基础支撑进一步夯实提升。网络设施和产业基础得到有效巩固加强，应用支撑和安全保障能力明显增强。固定宽带网络、新一代移动通信网和下一代互联网加快发展，物联网、云计算等新型基础设施更加完备。人工智能等技术及其产业化能力显著增强。 　　——发展环境进一步开放包容。全社会对互联网融合创新的认识不断深入，互联网融合发展面临的体制机制障碍有效破除，公共数据资源开放取得实质性进展，相关标准规范、信用体系和法律法规逐步完善。 　　到2025年，网络化、智能化、服务化、协同化的“互联网+”产业生态体系基本完善，“互联网+”新经济形态初步形成，“互联网+”成为经济社会创新发展的重要驱动力量。 　　二、重点行动 　　（一）“互联网+”创业创新。 　　充分发挥互联网的创新驱动作用，以促进创业创新为重点，推动各类要素资源聚集、开放和共享，大力发展众创空间、开放式创新等，引导和推动全社会形成大众创业、万众创新的浓厚氛围，打造经济发展新引擎。（发展改革委、科技部、工业和信息化部、人力资源社会保障部、商务部等负责，列第一位者为牵头部门，下同） 　　1.强化创业创新支撑。鼓 励大型互联网企业和基础电信企业利用技术优势和产业整合能力，向小微企业和创业团队开放平台入口、数据信息、计算能力等资源，提供研发工具、经营管理和市 场营销等方面的支持和服务，提高小微企业信息化应用水平，培育和孵化具有良好商业模式的创业企业。充分利用互联网基础条件，完善小微企业公共服务平台网 络，集聚创业创新资源，为小微企业提供找得着、用得起、有保障的服务。 　　2.积极发展众创空间。充 分发挥互联网开放创新优势，调动全社会力量，支持创新工场、创客空间、社会实验室、智慧小企业创业基地等新型众创空间发展。充分利用国家自主创新示范区、 科技企业孵化器、大学科技园、商贸企业集聚区、小微企业创业示范基地等现有条件，通过市场化方式构建一批创新与创业相结合、线上与线下相结合、孵化与投资 相结合的众创空间，为创业者提供低成本、便利化、全要素的工作空间、网络空间、社交空间和资源共享空间。实施新兴产业“双创”行动，建立一批新兴产业“双 创”示范基地，加快发展“互联网+”创业网络体系。 　　3.发展开放式创新。鼓...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/ios/2015/09/30/Event(%E4%B8%AD).html" class="bold">EventHandling for iOS(中)</a>
+  <p class="post-date">30 September 2015</p>
+  <p>
+    EventHandling for iOS 总结 一，想法 昨天写了一个iOS时间机制上，现在写个中，补齐一下。。。。 二，Regulating the Delivery of Touches to Views 手势识别会优先获得分析一个touch事件的机会，假如你有一个两个手指触摸的不连续的手势识别，那这个过程如下。 1）window 通过touchesBegan:withEvent:方法发送给gesture recognizer. 设置状态为possible.然后window 把相同的touches事件发送给相应的view 2) window 把移动的触摸事件发送给gesture recognizer. 这里还是不能识别，所以状态依然是possible，同样会把事件再给view 3）window 发送一个touch的事件给gesture recognizer,这里window会hold住不发送给view. 4) window 发送另一个touch(咋是两个手指)的事件给gesture recognizer。现在识别了这个手势，并且设置状态为recognized。接着调用 touchesCancelled来取消view先前的识别动作 假如这边识别失败咯，这里gesture recognizer会设置状态为UIGestureRecognizerStateFailed,并且会把两个touch的结束事件交给view。 对于一个连续的手势，这里window会把事件全部交给gesture recognizer. Affecting the Delivery of Touches to Views 这里你可以用过改变一些参数，来调整这么一个touches传递的过程。 delaysTouchesBegan(default of NO),为NO的是时候，是在touch Began阶段并不会传递touches事件给相应的view。 这里确保在gesture recognizer...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/ios/2015/09/29/Event(%E4%B8%8A).html" class="bold">EventHandling for iOS（上）</a>
+  <p class="post-date">29 September 2015</p>
+  <p>
+    EventHandling for iOS 总结 一，想法 最近在研究事件处理机制，顺便就把iOS的这块文档看了一下。文档里说了很多，这里准备总结总结，写个简短一点的，比较好看。。。。 二，About Events in iOS iOS这里主要包括三种主要的事件形式、Multi-Touch events, motion events, and events for controlling multimedia 第一种主要是用户触摸屏幕形成的事件、第二种主要是用户移动设备形成的事件、第三种主要是一些远程的控制，比如耳机线控这种。 Gesture Recognizers UIKit会封装一些常用的手势，相比于自己写一些gestures代码，这里可以直接使用UIKit已经写好的，毕竟比较方便。 没一个gesture recognizers都与一个view相关联，当然一个view可以有多个gesture recognizers。 Discrete and Continuous Gestures 对于手势识别，分为两个部分。一个是分离的，一个是连续的。这里分离指的是只出现一次的，比如单击，这种会发一个单一的消息。 一个连续的手势识别会发送一系列的事件消息。 我们要做的是把一个gesture recognizers添加到一个view上，代码如下 - (void)viewDidLoad { [super viewDidLoad]; // Create and initialize a tap gesture UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer...
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/%E6%97%A0%E6%89%80%E4%BA%8B%E4%BA%8B/2015/08/14/think.html" class="bold">思考</a>
+  <p class="post-date">14 August 2015</p>
+  <p>
+    思考
+
+一，工作一年
+
+不知不觉已经工作了一年之久，这个时间算不上长，但也算不上短咯。这一年自身的改变还是挺大的,因此决定花那么
+一点时间来记录一下自己的想法。
+来公司之前并没有相关的开发经验，在一些bug和需求的促进下，慢慢学会了一些常用的技巧。这期间遇到了很多的迷茫
+的事情，不过再大的困难，也这么过来咯，非常感谢老大给这么一个机会。
+记得刚进来第一个比较大的需求是和几个同事一起开发完成的，回过头来想想，当时真的是什么都不懂，并没有多少贡献
+，这里非常感谢导师的帮助。这个项目的开发对我最重要的一点是让我融入了整个团队，并可以一起作战。
+第二个比较大的需求是自己单独完成的，非常感谢导师对我的信任。这期间算是进步非常快的，因为没有人可以依赖，很
+多东西都必须自己去查，也必须自己去解决。虽然这个功能现在看起来还是比较简单的，但是对于当时的我来说挑战还是
+很大的。在这种压力下，最后还是解决了这个问题，当然这期间也非常感谢另一位同事的耐心。想想当时还很傻的提出了
+一个解决方案，发现完全不是这么回事，有点囧。
+后面就开始转战部门负责的产品。这期间不再是简单的页面改造，而是整个产品的升级和改造咯。做了一些新的功能和一些
+功能的升级，这里面改的东西非常的杂，不过也强化了业务的熟悉度。这期间自己实现了一个新的功能。最后能用上也是挺
+开心的，虽然感觉我的实现还是比较low，但毕竟是自己完成的。有所收获，又能有所贡献，还是可喜的一件事。
+过完年回来，发现节奏开始变的很快，在这种环境下，陆陆续续做了很多需求，最大的收获还是对业务的熟悉度进一步加
+深。
+
+二，关于技术
+
+混了一年的需求和项目，自己也算是个入门者咯。技术上目前还是仅仅只会一些皮毛的东西，感觉还是对自己的要求太低。
+对自己也制定了一些技术的学习计划。想的太多也没用，先把自己列举的这些知识点学好把，都懂咯应该算是正式的入门咯
+。和同事的聊天中，总是能感觉自己有很多有差距的地方，想想在学校的时候真是全玩掉咯，一些基本功还是需要快速补上
+来的。最近不知道哪根神经触动了自己，觉得自己不应该像现在这样沉沦下去，应该学会真的去认识这个世界。下半年基本
+上有两件需要特别加强的技术点，希望最后能达到自己技术上的目标。
+
+三，思考
+
+记得上学期间，很喜欢的一句话便是，多想上天再能给我一柄宝剑，一匹骏马，让我再在江湖上行走20年。这是一种退役
+时候的遗憾，虽然没有这么深的感悟，想想当时不玩acm的时候，自己也是非常失落的。可惜上天不会再给我一次机会，能
+有的机会只能从现在抓起咯。
+最近时常会想到一句话，我只有25岁，有什么事情是可以阻挡我的脚步的呢。人长大了一点，却给自己画了一个天花板，
+很多事情不敢再去想。自己的青春只有这么一次，难道真的等到老了以后，再去后悔什么。
+只能说做自己最想做的事情，future是怎样，我现在想不到。现在能想到的还是那句话，一柄宝剑，一匹骏马，我还是想
+在这江湖中挥洒我的青春。
+
+  </p>
+</div>
+
+<div class="post-area">
+  <a href="/%E6%97%A0%E6%89%80%E4%BA%8B%E4%BA%8B/2015/08/13/essay.html" class="bold">随笔</a>
+  <p class="post-date">13 August 2015</p>
+  <p>
+    随笔
+第一篇blog就这样建立起来咯，谈不上多少惊喜，只是无意间想到了还有这么一件事情需要去做。
+也算是完成了一直以来的一个小的想法，总算是显得有点逼格咯。
+发现自己越来越像一个程序员咯，不知道这个算是一件幸运的事情，还是一件悲伤的事情。
+
   </p>
 </div>
 

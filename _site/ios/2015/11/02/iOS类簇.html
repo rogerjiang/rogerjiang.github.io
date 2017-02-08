@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>从NSArray类簇</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/owl.carousel.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/airspace.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/ionicons.min.css" />
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/responsive.css" />
+<link rel="stylesheet" href="/css/syntax.css" />
+
+<!-- Js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/min/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!--
+/*
+ * Airspace
+ * Ported to Jekyll by Andrew Lee
+ * https://github.com/luminousrubyist/airspace-jekyll
+ * Designed and Developed by ThemeFisher
+ * https://themefisher.com/
+ *
+ */
+-->
+
+
+  </head>
+  <body>
+
+
+    <!-- Header Start -->
+<header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- header Nav Start -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="/img/logo.png" alt="Logo">
+            </a>
+          </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/work">Work</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header><!-- header close -->
+
+
+
+    <div class="post">
+  <!-- Wrapper Start -->
+  <section id="intro" style="border: 1px dotted #ddd;">
+    <div class="container">
+      <div class="row">
+        <div>
+          <div class="block">
+            <h1>从NSArray类簇</h1>
+            <div class="post-info-wrapper">
+              <p class="italic">By <span class="bold"></span> on <span class="bold">November 2, 2015</span></p>
+            </div>
+            <hr />
+            <p><h1 id="nsarray类簇">NSArray类簇</h1>
+
+<h2 id="一想法">一，想法</h2>
+
+<p>看到了一个关于iOS类簇的一篇文章，觉得这个想法挺不错的，直接转过来。</p>
+
+<h2 id="class-clusters">Class Clusters</h2>
+
+<p>Class Clusters（类簇）是抽象工厂模式在iOS下的一种实现，众多常用类，如NSString，NSArray，NSDictionary，NSNumber都运作在这一模式下，它是接口简单性和扩展性的权衡体现，在我们完全不知情的情况下，偷偷隐藏了很多具体的实现类，只暴露出简单的接口。</p>
+
+<h2 id="nsarray的类簇">NSArray的类簇</h2>
+
+<p>虽然官方文档中拿NSNumber说事儿，但Foundation并没有像图中描述的那样为每个number都弄一个子类，于是研究下NSArray类簇的实现方式。</p>
+
+<h2 id="__nsplacehodlerarray">__NSPlacehodlerArray</h2>
+<p>熟悉这个模式的同学很可能看过下面的测试代码，将原有的alloc+init拆开写：</p>
+
+<pre>
+<code>
+id obj1 = [NSArray alloc]; // __NSPlacehodlerArray *
+id obj2 = [NSMutableArray alloc];  // __NSPlacehodlerArray *
+id obj3 = [obj1 init];  // __NSArrayI *
+id obj4 = [obj2 init];  // __NSArrayM *
+</code>
+</pre>
+
+<p>发现+ alloc后并非生成了我们期望的类实例，而是一个__NSPlacehodlerArray的中间对象，后面的- init或- initWithXXXXX消息都是发送给这个中间对象，再由它做工厂，生成真的对象。这里的__NSArrayI和__NSArrayM分别对应Immutable和Mutable（后面的I和M的意思）</p>
+
+<p>于是顺着思路猜实现，__NSPlacehodlerArray必定用某种方式存储了它是由谁alloc出来的这个信息，才能在init的时候知道要创建的是可变数组还是不可变数组</p>
+
+<p>于是乎很开心的去看了下*obj1的内存布局：</p>
+
+<p><img src="/img/posts/lei1.jpg" alt="Alt text" /></p>
+
+<p>下面是32位模拟器中的内存布局（64位太长不好看就临时改32位了- -），第一个箭头是<em>obj1，第二个是</em>obj2</p>
+
+<p><img src="/img/posts/lei2.jpg" alt="Alt text" /></p>
+
+<p>我们知道，对象的前4字节（32位下）为isa指针，指向类对象地址，上图所示的0x0051E768就是__NSPlacehodlerArray类对象地址，可以从lldb下po这个地址来验证。</p>
+
+<p>那么问题来了，这个中间对象并没有储存任何信息诶（除了isa外就都是0了），那它init的时候咋知道该创建什么呢？
+经过研究发现，Foundation用了一个很贱的比较静态实例地址方式来实现，伪代码如下：</p>
+
+<pre>
+<code>
+static __NSPlacehodlerArray *GetPlaceholderForNSArray() {
+    static __NSPlacehodlerArray *instanceForNSArray;
+    if (!instanceForNSArray) {
+        instanceForNSArray = [[__NSPlacehodlerArray alloc] init];
+    }
+    return instanceForNSArray;
+}
+
+static __NSPlacehodlerArray *GetPlaceholderForNSMutableArray() {
+    static __NSPlacehodlerArray *instanceForNSMutableArray;
+    if (!instanceForNSMutableArray) {
+        instanceForNSMutableArray = [[__NSPlacehodlerArray alloc] init];
+    }
+    return instanceForNSMutableArray;
+}
+// NSArray实现
++ (id)alloc
+{
+    if (self == [NSArray class]) {
+        return GetPlaceholderForNSArray()
+    }
+}
+// NSMutableArray实现
++ (id)alloc
+{
+    if (self == [NSMutableArray class]) {
+        return GetPlaceholderForNSMutableArray()
+    }
+}
+// __NSPlacehodlerArray实现
+- (id)init
+{
+    if (self == GetPlaceholderForNSArray()) {
+        self = [[__NSArrayI alloc] init];
+    }
+    else if (self == GetPlaceholderForNSMutableArray()) {
+        self = [[__NSArrayM alloc] init];
+    }
+    return self;
+}
+
+</code>
+</pre>
+
+<p>Foundation不是开源的，所以上面的代码是猜测的，思路大概就是这样，可以这样验证下：</p>
+
+<pre>
+<code>
+id obj1 = [NSArray alloc]; 
+id obj2 = [NSArray alloc];
+id obj3 = [NSMutableArray alloc];
+id obj4 = [NSMutableArray alloc];
+// 1和2地址相同，3和4地址相同，无论多少次都相同，且地址相差16位
+
+</code>
+</pre>
+
+<h2 id="静态不可变的空对象">静态不可变的空对象</h2>
+
+<p>除此之外，Foundation对不可变版本的空数组也做了个小优化：</p>
+
+<pre>
+<code>
+NSArray *arr1 = [[NSArray alloc] init];
+NSArray *arr2 = [[NSArray alloc] init];
+NSArray *arr3 = @[];
+NSArray *arr4 = @[];
+NSArray *arr5 = @[@1];
+
+</code>
+</pre>
+
+<p>上边1-4号都指向了同一个对象，而arr5指向了另一个对象。
+若干个不可变的空数组间没有任何特异性，返回一个静态对象也理所应当。
+不仅是NSArray，Foundation中如NSString, NSDictionary, NSSet等区分可变和不可变版本的类，空实例都是静态对象（NSString的空实例对象是常量区的@”“）</p>
+
+<p>所以也给用这些方法来测试对象内存管理的同学提个醒，很容易意料之外的。</p>
+
+<p>##转载的具体地址
+http://blog.sunnyxx.com/2014/12/18/class-cluster/</p>
+</p>
+          </div>
+        </div><!-- .col-md-7 close -->
+      </div>
+    </div>
+  </section>
+</div>
+<p class="center-text" style="padding: 30px;">
+  <a href="/blog">Back to blog</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="#">How it works</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design &amp; Developed by <a href="http://www.themefisher.com">Themefisher</a>. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>EventHandling for iOS(中)</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/owl.carousel.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/airspace.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/ionicons.min.css" />
+<link rel="stylesheet" href="/css/animate.css" />
+<link rel="stylesheet" href="/css/responsive.css" />
+<link rel="stylesheet" href="/css/syntax.css" />
+
+<!-- Js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/min/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!--
+/*
+ * Airspace
+ * Ported to Jekyll by Andrew Lee
+ * https://github.com/luminousrubyist/airspace-jekyll
+ * Designed and Developed by ThemeFisher
+ * https://themefisher.com/
+ *
+ */
+-->
+
+
+  </head>
+  <body>
+
+
+    <!-- Header Start -->
+<header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- header Nav Start -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img src="/img/logo.png" alt="Logo">
+            </a>
+          </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/work">Work</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div>
+    </div>
+  </div>
+</header><!-- header close -->
+
+
+
+    <div class="post">
+  <!-- Wrapper Start -->
+  <section id="intro" style="border: 1px dotted #ddd;">
+    <div class="container">
+      <div class="row">
+        <div>
+          <div class="block">
+            <h1>EventHandling for iOS(中)</h1>
+            <div class="post-info-wrapper">
+              <p class="italic">By <span class="bold"></span> on <span class="bold">September 30, 2015</span></p>
+            </div>
+            <hr />
+            <p><h1 id="eventhandling-for-ios-总结">EventHandling for iOS 总结</h1>
+
+<h2 id="一想法">一，想法</h2>
+
+<p>昨天写了一个iOS时间机制上，现在写个中，补齐一下。。。。</p>
+
+<h2 id="二regulating-the-delivery-of-touches-to-views">二，Regulating the Delivery of Touches to Views</h2>
+
+<p><img src="/img/posts/event_4.png" alt="Alt text" />
+手势识别会优先获得分析一个touch事件的机会，假如你有一个两个手指触摸的不连续的手势识别，那这个过程如下。
+1）window 通过touchesBegan:withEvent:方法发送给gesture recognizer. 设置状态为possible.然后window 把相同的touches事件发送给相应的view
+2) window 把移动的触摸事件发送给gesture recognizer. 这里还是不能识别，所以状态依然是possible，同样会把事件再给view
+3）window 发送一个touch的事件给gesture recognizer,这里window会hold住不发送给view.
+4) window 发送另一个touch(咋是两个手指)的事件给gesture recognizer。现在识别了这个手势，并且设置状态为recognized。接着调用
+touchesCancelled来取消view先前的识别动作</p>
+
+<p>假如这边识别失败咯，这里gesture recognizer会设置状态为UIGestureRecognizerStateFailed,并且会把两个touch的结束事件交给view。
+对于一个连续的手势，这里window会把事件全部交给gesture recognizer.</p>
+
+<p>Affecting the Delivery of Touches to Views
+这里你可以用过改变一些参数，来调整这么一个touches传递的过程。
+delaysTouchesBegan(default of NO),为NO的是时候，是在touch Began阶段并不会传递touches事件给相应的view。
+这里确保在gesture recognizer 识别出来手势之前，不会有touch事件给view。（这里有些不清楚）</p>
+
+<p>delaysTouchesEnded(default of YES)
+这里主要是在上面说得第3点得时候，如果是YES,这里会hold住事件。如果设置为NO,这里会同时发送给view.</p>
+
+<h2 id="creating-a-custom-gesture-recognizer">Creating a Custom Gesture Recognizer</h2>
+
+<p>这里当然需要有一些自定义的手势识别，这里需要创建一个UIGestureRecognizer的一个子类。</p>
+<pre>
+<code>
+- (void)reset;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+</code>
+</pre>
+
+<p>这里主要实现上面这些方法，用来把一些低级别的touch事件转化成手势这种高级的方式。</p>
+
+<p>苹果这里举出了一个例子，可以参考一下。</p>
+
+<pre>
+<code>
+
+#import &lt;UIKit/UIGestureRecognizerSubclass.h&gt;
+  // Implemented in your custom subclass
+  - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+      [super touchesBegan:touches withEvent:event];
+      if ([touches count] != 1) {
+          self.state = UIGestureRecognizerStateFailed;
+          return; }
+}
+  - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+      [super touchesMoved:touches withEvent:event];
+      if (self.state == UIGestureRecognizerStateFailed) return;
+      UIWindow *win = [self.view window];
+      CGPoint nowPoint = [touches.anyObject locationInView:win];
+      CGPoint nowPoint = [touches.anyObject locationInView:self.view];
+      CGPoint prevPoint = [touches.anyObject previousLocationInView:self.view];
+      // strokeUp is a property
+      if (!self.strokeUp) {
+          // On downstroke, both x and y increase in positive direction
+          if (nowPoint.x &gt;= prevPoint.x &amp;&amp; nowPoint.y &gt;= prevPoint.y) {
+              self.midPoint = nowPoint;
+              // Upstroke has increasing x value but decreasing y value
+          } else if (nowPoint.x &gt;= prevPoint.x &amp;&amp; nowPoint.y &lt;= prevPoint.y) {
+              self.strokeUp = YES;
+          } else {
+              self.state = UIGestureRecognizerStateFailed;
+          }
+} }
+  - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+      [super touchesEnded:touches withEvent:event];
+      if ((self.state == UIGestureRecognizerStatePossible) &amp;&amp; self.strokeUp) {
+          self.state = UIGestureRecognizerStateRecognized;
+      }
+}
+  - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+      [super touchesCancelled:touches withEvent:event];
+      self.midPoint = CGPointZero;
+      self.strokeUp = NO;
+      self.state = UIGestureRecognizerStateFailed;
+}
+</code>
+</pre>
+
+<p>这里最主要的问题，是需要一个正确的状态转换。对于连续的和间断的一些事件的处理，这里状态的转换有一些不同。
+这个地方突然想到了react-native这个地方的事件处理，也是自己定制化了一个gesture recognizer.
+这里还有一个reset方法，这里可以进行一些手势的重新初始化的工作。</p>
+
+<h2 id="event-delivery-the-responder-chain">Event Delivery: The Responder Chain</h2>
+<p>这里需要讨论一个老生常谈的问题，responder Chain的问题。
+手势识别的3中主要方式，第一种还是touch events 这里window首先会把events发送给hit-test view.
+这个寻找hit-test view的方式被称作hit-testing.
+motion和remote control events 会首先发送给first responder。</p>
+
+<h3 id="hit-testing-returns-the-view-where-a-touch-occurred">Hit-Testing Returns the View Where a Touch Occurred</h3>
+<p>其实这个寻找的过程，是比较符合人的想法的，最上面是啥，当然是想点哪个。这里有一个小的例子</p>
+
+<p><img src="/img/posts/event_5.png" alt="Alt text" /></p>
+
+<ol>
+  <li>The touch is within the bounds of view A, so it checks subviews B and C.</li>
+  <li>The touch is not within the bounds of view B, but it’s within the bounds of view C, so it checks subviews
+D and E.</li>
+  <li>The touch is not within the bounds of view D, but it’s within the bounds of view E.
+View E is the lowest view in the view hierarchy that contains the touch, so it becomes the hit-test view.</li>
+</ol>
+
+<p>这里有两个主要的方法，一个是hitTest:withEvent方法。一个是pointInside:withEvent会返回点击的view。当然这个方法会调用pointInside:
+withEvent:来判断是否点击的区域在view中。
+如果点击到的点不在view区域中，pointInside:withEvent会返回NO。hitTest:withEvent将会返回nil.如果一个点击事件的父view返回了nil，这里
+子view肯定不会收到touch events.</p>
+
+<h3 id="the-responder-chain-is-made-up-of-responder-objects">The Responder Chain Is Made Up of Responder Objects</h3>
+<p>这里hit-test view有拥有优先的机会，如果不能处理这个事件，这里将会根据Responder Chain来传递这个事件。
+这里UIResponder是responder对象的基本类，UIApplication,UIViewController,UIView都是responders，这些都可以作为responder
+Chain 中的一员。这里注意Core Animation layes不是responders.
+The first responder被设计作为第一个事件接收对象，一个对象想成为第一接收对象。这里需要做两件事。
+1）覆盖 canBecomeFirestResponder 方法，返回YES.
+2)收到一个becomeFirstResponder消息，如果可能，一个对象能对自己发这类消息。</p>
+
+<p>这里最好在viewDidAppear这个地方，调用becomeFirstResponder方法。如果过早的话，becomeFirstRespnder会返回NO.
+这里UIKit自动设置the text field或者text view成为第一响应者，其他的需要手动设置becomeFirstReponder方法。</p>
+
+<h3 id="the-responder-chain-follows-a-specific-delivery-path">The Responder Chain Follows a Specific Delivery Path</h3>
+<p>如下有两个例子可以说明一下这个responder chain传递的顺序。
+<img src="/img/posts/event_6.png" alt="Alt text" />
+1、initial view 首先处理这个事件，如果不能处理，会给他得superview.当然这是因为view不是他view controler的最底层的view。
+2、superview 也处理这个事件，搞不定继续向上传递，当然条件如第一条
+3、到了最底层的view,这里搞不定，需要把事件传递给view的view controller
+4、view controller搞不定，这里就需要把事件传递给window.
+5、window搞不定传递给app object.</p>
+
+<p><img src="/img/posts/event_7.png" alt="Alt text" />
+这里因为view层级和view controller的设计不同，有一点区别，但传递的原则是一样的。
+1、initial view 首先处理这个事件，如果不能处理，会给他得superview.一直到最底层的view.
+2、view 传递给view controller
+3、搞不定，传递给最底层view的superview(这里是有多个view controller)
+4、一直传递到root view controller都搞不定，就会传递给window。
+5、window搞不定传递给app object.
+这里有个小的提示，最好不要自己直接将事件传递给nextResponder.而是遵守这么一个reponder chain的规则，
+利用UIKit来管理这个事件的传递。</p>
+
+<h2 id="multitouch-events">Multitouch Events</h2>
+<p><img src="/img/posts/event_8.png" alt="Alt text" />
+当然实现了一些上述的子类以后，你需要注意如下的几点：
+1）你的子类必须实现UIResponder的方法，重要的还是那4个方法
+2）view子类，需要设置userInteractionEnabled属性为YES.如果是一个view controller,管理的view需要设置为YES
+3) view收到事件的时候，必须是可见的，也就是不能是隐藏的</p>
+
+<h3 id="implementing-the-touch-event-handling-methods-in-your-subclass">Implementing the Touch-Event Handling Methods in Your Subclass</h3>
+<p>就是如下4个提了再提得方法</p>
+<ul>
+  <li>(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;</li>
+  <li>(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;</li>
+  <li>(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;</li>
+  <li>(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;</li>
+</ul>
+
+<p>我们可以发现每个方法都有两个参数，第一个参数是UITouch的一个集合，代表是这个阶段新的或者是改变的touches.而UIEvent是包含整个touche事件的。
+所有的view都是期望收到整个touch-event流的，所以你需要注意以下几点
+1）如果是UIView或者UIViewController的子类，你需要实现所有的方法
+2）如果你事其他的一些reponder子类，你可以实现部分方法
+3）记得所有你实现的方法中，都需要调用一些父类的方法。</p>
+
+<p>如果一个reponder在处理events的时候创建了一些objects，那他需要实现touchesCanceller:withEvent来做一些reset的工作。
+当然这里也需要实现一些touchesEnded:withEvent的方法，来在一次事件处理完成以后，进行一些reset的工作。</p>
+
+<h3 id="tracking-the-phase-and-location-of-a-touch-event">Tracking the Phase and Location of a Touch Event</h3>
+
+<p>这里iOS会存储一些相关的信息，一个touch对象存储了touch事件出现的window,点击的view,准确的坐标地址。</p>
+
+<h3 id="retrieving-and-querying-touch-objects">Retrieving and Querying Touch Objects</h3>
+
+<p>这里可以调用allTouches来获得所有的touch</p>
+
+<p><img src="/img/posts/event_9.png" alt="Alt text" /></p>
+
+<p>当然你也可以只对特定window的touch感兴趣，你可以调用touchesForWindow:方法
+<img src="/img/posts/event_10.png" alt="Alt text" /></p>
+
+<p>或者说你只对特定view上的touch感兴趣，你可以调用touchesForView:方法
+<img src="/img/posts/event_11.png" alt="Alt text" /></p>
+
+<h3 id="handling-tap-gestures">Handling Tap Gestures</h3>
+
+<p>这里话不多说，对于点击事件的一个判断的例子</p>
+<pre>
+<code>
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *aTouch in touches) {
+        if (aTouch.tapCount &gt;= 2) {
+             // The view responds to the tap
+             [self respondToDoubleTapGesture:aTouch];
+} }
+}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+</code>
+</pre>
+
+<h3 id="handling-swipe-and-drag-gestures">Handling Swipe and Drag Gestures</h3>
+<pre>
+<code>
+#define HORIZ_SWIPE_DRAG_MIN 12
+  #define VERT_SWIPE_DRAG_MAX    4
+  - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+      UITouch *aTouch = [touches anyObject];
+      // startTouchPosition is a property
+      self.startTouchPosition = [aTouch locationInView:self];
+}
+  - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+  }
+  - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+      UITouch *aTouch = [touches anyObject];
+      CGPoint currentTouchPosition = [aTouch locationInView:self];
+      //  Check if direction of touch is horizontal and long enough
+      if (fabsf(self.startTouchPosition.x - currentTouchPosition.x) &gt;=
+  HORIZ_SWIPE_DRAG_MIN &amp;&amp;
+          fabsf(self.startTouchPosition.y - currentTouchPosition.y) &lt;=
+  VERT_SWIPE_DRAG_MAX)
+      {
+          // If touch appears to be a swipe
+          if (self.startTouchPosition.x &lt; currentTouchPosition.x) {
+          
+              [self myProcessRightSwipe:touches withEvent:event];
+          } else {
+              [self myProcessLeftSwipe:touches withEvent:event];
+}
+      self.startTouchPosition = CGPointZero;
+  }
+  - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+      self.startTouchPosition = CGPointZero;
+}
+</code>
+</pre>
+
+<p>当然这个检测是比较简单的，这里需要检测一下中间的状态。下面这个例子就是与中间过程有关。</p>
+<pre>
+<code>
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+  - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+      UITouch *aTouch = [touches anyObject];
+      CGPoint loc = [aTouch locationInView:self];
+      CGPoint prevloc = [aTouch previousLocationInView:self];
+      CGRect myFrame = self.frame;
+      float deltaX = loc.x - prevloc.x;
+      float deltaY = loc.y - prevloc.y;
+      myFrame.origin.x += deltaX;
+         myFrame.origin.y += deltaY;
+      [self setFrame:myFrame];
+  }
+  - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  }
+  - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+  }
+</code>
+</pre>
+
+<h3 id="handling-a-complex-multitouch-sequence">Handling a Complex Multitouch Sequence</h3>
+
+<p>当然总是会有一些复杂的动作，这里为了识别这种多点的触摸。应该做以下两件事情。
+1、设置multipleTouchEnabled 属性为YES
+2、使用Core Foundation的dictionary object(CFDictionaryRef)</p>
+
+<p>需要注意的是这里使用CFDictionaryRef对象而不是NSDitionary对象，因为UITouch类没有实现NSCopying协议。</p>
+
+<h3 id="specifying-custom-touch-event-behavior">Specifying Custom Touch Event Behavior</h3>
+
+<p>这里你可以通过设置一些属性来调整事件响应的一些方式。
+1）Turn on delivery of multiple touches. 可以设置multipleTouchEnabled属性为YES,使得支持多点触控。
+2) Restrict event delivery to a single view. 这里通过设置exclusiveTouch，如果设置为YES，表明这个
+view必须是touches事件都是这个view上才会收到touches事件。
+这里有一个例子，A设置了exclusive为YES,B和C设置为NO。如果一个用户触摸到了view A.这里会去识别，但是如果
+触摸到view A 同时也触摸到view B。这里A就不会收到这个touches事件。这里B也不会收到这个事件。如果用户触摸到
+B的同时也触摸到C，这里B和C都能收到相应的touches. 这里可以简化一些事件的处理。
+<img src="/img/posts/event_11.png" alt="Alt text" /></p>
+
+<p>3）Restrict event delivery to subviews，这里可以通过覆盖hitTest:withEvent:使得events不会传递到
+指定的子view中。
+4）Turn off delivery of touch events。 这里可以通过设置userInteractionEnabled属性使得view不会传递这个事件。
+5）Turn off delivery of touch events for a period。有时候你只是想临时取消关闭一下事件传递，你可以使用
+beginIgnoringInteractionEvents来关闭，再用endIgnoringInteractionEvents来恢复。</p>
+
+<h3 id="intercepting-touches-by-overriding-hit-testing">Intercepting Touches by Overriding Hit-Testing</h3>
+<p>如果你有一个view，并且有一些子view。你想都用父view来处理这些事件。这里你需要修改这个hitTest:withEvent:方法。</p>
+
+<h3 id="forwarding-touch-events">Forwarding Touch Events</h3>
+<p>这里有一个特殊的用法，将事件的处理转发出去。这里需要小心一点，因为如果不是在你view范围内的，你收到了这个事件
+你需要处理这种情况。这里需要使用sendEvent这个方法.</p>
+
+<h3 id="best-practices-for-handling-multitouch-events">Best Practices for Handling Multitouch Events</h3>
+<p>目前有一些建议，可以参考一下。
+1）总是实现事件取消的方法。如果你在处理的过程中有一些中间状态的保存，在取消的时候需要重置这些状态。
+2）如果你处理事件是在UIView,UIViewController,UIResponder的子类，实现所有的方法，即使是什么都不做。
+不要调用父类的实现方法
+3）如果你处理是在其他的UIKit的响应类的子类。不需要实现所有的方法，这里需要调用父类的实现方法。
+4）不要转发events给UIKit framework的其他响应对象。最好是转发events给uiview的子类。
+5）不要显示的调用nextResponder方法
+6）这里对于点最好不好转换成整数，容易失去精准度。</p>
+</p>
+          </div>
+        </div><!-- .col-md-7 close -->
+      </div>
+    </div>
+  </section>
+</div>
+<p class="center-text" style="padding: 30px;">
+  <a href="/blog">Back to blog</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="#">How it works</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design &amp; Developed by <a href="http://www.themefisher.com">Themefisher</a>. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </body>
+</html>
