@@ -1,7 +1,7 @@
-个人博客,请随意使用
+# _Airspace_ for Jekyll
+![screenshot](screenshots/home.png "Description goes here")
 
-PS:如果使用此博客,请修改多说
+This Jekyll theme is a port of ThemeFisher's Airspace template. It is released under ThemeFisher's free license, which requires attribution.
 
-PSS: 首页文章是在categray == life里的第一篇
-
-(*^__^*)
+## Usage
+To start your project, [fork this respository](https://github.com/luminousrubyist/airspace-jekyll/fork), put in your content, and go!

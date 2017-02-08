@@ -1,40 +1,37 @@
+
+exclude:
+  - "/vendor/"
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "README.md"
+  - "LICENSE.md"
+  - "*.gemspec"
+
+keep_files:
+  - "CNAME"
+  - ".git"
+  - ".gitignore"
+
+
 # Site settings
-title: rogerjiang's Blog
-email: fengyindaqiang@gmail.com
-description: "Python,HTML,CSS,Machine Leaning"
-permalink: /:year/:month/:day/:title.html
-baseurl: ""
-url: "http://rogerjiang.github.io"
-atom-baseurl: "http://rogerjiang.github.io"
-author: “rogerjiang”
+title: Airspace
+subtitle: "A free HTML5 agency template"
+url: "http://luminousrubyist.github.io" # the base hostname & protocol for your site
+# baseurl: "/the/subpath/of/your/site" # Set this value to "" if you want your site to be root
+baseurl: "/airspace-jekyll"
+cover: "/assets/cover.png"
+logo: "/assets/logo.png"
 
 # Build settings
-# permalink: date
+markdown: kramdown
 
-highlighter: pygments
-markdown: redcarpet
-redcarpet:
-  extensions: [fenced_code_blocks,no_intra_emphasis,strikethrough,no_intra_emphasis,autolink,tables]
+# Google analytics
+# ga_tracking_id: "UA-XXXX-1"
 
-#duoshuo
-  comments :
-    provider : duoshuo
-    duoshuo :
-      short_name : taizilongxu
+# Category descriptions (for archive pages)
+descriptions:
+  - cat: jekyll
+    desc: "Posts describing Jekyll setup techniques."
 
-navigations:
-  - title: About
-    class: fa fa-list-ul
-    href: /about/
-  - title: Archive
-    class: fa fa-tags
-    href: /archive/
-  - title: Categories
-    class: fa fa-user
-    href: /categories/
-  - title: Tags
-    class: fa fa-film
-    href: /tags/
-  - title: Rss
-    class: fa fa-rss
-    href: /atom.xml
+  - cat: dummy
+    desc: "Just some placeholder posts, lorem ipsum and the rest."
